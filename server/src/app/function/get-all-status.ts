@@ -6,6 +6,7 @@ export async function getAllStatus() {
 		.select({
 			id: status.id,
 			title: status.title,
+			column: status.column,
 		})
 		.from(status);
 

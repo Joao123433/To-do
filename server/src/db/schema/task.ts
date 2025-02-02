@@ -19,7 +19,7 @@ export const task = pgTable("task", {
 		.notNull(),
 	comment: text("comment"),
 	finished: boolean("finished"),
-	row: text("row"),
+	row: text("row").notNull(),
 	createdAt: timestamp("created_at").notNull(),
 	updatedAt: timestamp("updated_at").notNull(),
 });

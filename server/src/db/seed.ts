@@ -9,7 +9,11 @@ async function seed() {
 
 	const [done, inProgress, toDo] = await db
 		.insert(status)
-		.values([{ title: "Done" }, { title: "In Progress" }, { title: "To-Do" }])
+		.values([
+			{ title: "To-Do", column: "A" },
+			{ title: "In Progress", column: "B" },
+			{ title: "Done", column: "C" },
+		])
 		.returning();
 
 	const [low, medium, high] = await db
@@ -27,6 +31,7 @@ async function seed() {
 			status: inProgress.id,
 			comment: "lorem lorem lorem lorem",
 			finished: false,
+			row: `${inProgress.column}1`,
 			createdAt: currentDay.toDate(),
 			updatedAt: currentDay.toDate(),
 		},

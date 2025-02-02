@@ -5,6 +5,8 @@ import { createId } from "@paralleldrive/cuid2";
 export const status = pgTable("status", {
 	id: text("id")
 		.primaryKey()
-		.$defaultFn(() => createId()),
-	title: text("title"),
+		.$defaultFn(() => createId())
+		.notNull(),
+	title: text("title").notNull(),
+	column: text("column").notNull(),
 });
