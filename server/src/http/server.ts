@@ -1,3 +1,4 @@
+import fastifyCors from "@fastify/cors";
 import fastify from "fastify";
 import {
 	type ZodTypeProvider,
@@ -6,6 +7,8 @@ import {
 } from "fastify-type-provider-zod";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
+
+app.register(fastifyCors, { origin: "*" });
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);

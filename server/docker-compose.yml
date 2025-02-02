@@ -8,4 +8,4 @@ services:
     environment:
       - POSTGRES_USER=docker
       - POSTGRES_PASSWORD=docker
-      - POSTGRES_DB=react-totvs
+      - POSTGRES_DB=To-Do-List

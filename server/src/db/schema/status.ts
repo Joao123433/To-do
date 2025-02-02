@@ -1,7 +1,8 @@
+import { text } from "drizzle-orm/pg-core";
+import { pgTable } from "drizzle-orm/pg-core";
 import { createId } from "@paralleldrive/cuid2";
-import { pgTable, text } from "drizzle-orm/pg-core";
 
-export const priority = pgTable("priority", {
+export const status = pgTable("status", {
 	id: text("id")
 		.primaryKey()
 		.$defaultFn(() => createId()),
