@@ -26,6 +26,7 @@ async function seed() {
 			deadline: currentDay.toDate(),
 			status: inProgress.id,
 			comment: "lorem lorem lorem lorem",
+			finished: false,
 			createdAt: currentDay.toDate(),
 			updatedAt: currentDay.toDate(),
 		},
