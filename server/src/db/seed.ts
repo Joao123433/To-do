@@ -17,7 +17,7 @@ async function seed() {
 		.values([{ title: "Low" }, { title: "Medium" }, { title: "High" }])
 		.returning();
 
-	const currentDay = dayjs();
+	const currentDay = dayjs(new Date());
 
 	await db.insert(task).values([
 		{
