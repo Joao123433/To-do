@@ -1,0 +1,15 @@
+import fastify from "fastify";
+import {
+	type ZodTypeProvider,
+	validatorCompiler,
+	serializerCompiler,
+} from "fastify-type-provider-zod";
+
+const app = fastify().withTypeProvider<ZodTypeProvider>();
+
+app.setValidatorCompiler(validatorCompiler);
+app.setSerializerCompiler(serializerCompiler);
+
+app.listen({ port: 3000 }).then(() => {
+	console.log("Server Running!!!");
+});
