@@ -1,8 +1,9 @@
+import { eq } from "drizzle-orm";
 import { db } from "../../db";
 import { task } from "../../db/schema";
 
-export async function getAllTask() {
-	const allTask = await db
+export async function getTask(idTask: string) {
+	const taskFetch = await db
 		.select({
 			id: task.id,
 			title: task.title,
@@ -11,11 +12,9 @@ export async function getAllTask() {
 			status: task.status,
 			comment: task.comment,
 			finished: task.finished,
-			row: task.row,
-			createdAt: task.createdAt,
-			updatedAt: task.updatedAt,
 		})
-		.from(task);
+		.from(task)
+		.where(eq(task.id, idTask));
 
-	return { allTask };
+	return { taskFetch };
 }

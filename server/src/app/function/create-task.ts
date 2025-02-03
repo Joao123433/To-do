@@ -23,7 +23,6 @@ async function generateNextRow(idStatus: string): Promise<string> {
 	const lastRowValue = lastTask[0].row;
 	const rowPrefix = lastRowValue.slice(0, 1);
 	const lastNumber = Number(lastRowValue.slice(1));
-
 	const nextNumber = lastNumber + 1;
 
 	return `${rowPrefix}${nextNumber}`;

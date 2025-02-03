@@ -11,6 +11,8 @@ import { getAllTaskRoute } from "./routes/get-all-task";
 import { newTaskRoute } from "./routes/create-task";
 import { deleteTaskRoute } from "./routes/delete-task";
 import { updateTaskRoute } from "./routes/update-task";
+import { getTaskByStatusRouter } from "./routes/get-task-by-priority";
+import { getTaskRouter } from "./routes/get-task";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
@@ -25,9 +27,12 @@ app.register(getAllPrioritiesRouter); // /priorities
 
 // CRUD
 app.register(getAllTaskRoute); // /task
-app.register(newTaskRoute); // /task
+app.register(getTaskRouter); // /task
 app.register(deleteTaskRoute); // /task
 app.register(updateTaskRoute); // /task
+
+// TASKS FILTERS
+app.register(getTaskByStatusRouter); // task-status
 
 app.listen({ port: 3000 }).then(() => {
 	console.log("Server Running!!!");

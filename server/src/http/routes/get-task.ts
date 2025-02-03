@@ -1,10 +1,10 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import { getTasksByStatus } from "../../app/function/get-task-by-status";
+import { getTask } from "../../app/function/get-task";
 
-export const getTaskByStatusRouter: FastifyPluginAsyncZod = async (app) => {
+export const getTaskRouter: FastifyPluginAsyncZod = async (app) => {
 	app.get(
-		"/task-status",
+		"/task",
 		{
 			schema: {
 				headers: z.object({
@@ -15,9 +15,9 @@ export const getTaskByStatusRouter: FastifyPluginAsyncZod = async (app) => {
 		async (req, res) => {
 			const id = req.headers.id;
 
-			const { taskByStatus } = await getTasksByStatus(id);
+			const { taskFetch } = await getTask(id);
 
-			return taskByStatus;
+			return taskFetch;
 		},
 	);
 };
