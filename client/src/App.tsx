@@ -1,9 +1,12 @@
 import { RouterProvider } from "react-router-dom"
 import { router } from "./router"
+import { TaskProvider } from "./context/TaskContext"
 
 function App() {
   return (
-    <RouterProvider router={router} />
+    <TaskProvider>
+      <RouterProvider router={router} />
+    </TaskProvider>
   )
 }
 

@@ -1,25 +1,37 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&display=swap"); */
 
 :root {
   margin: 0;
-  padding: 0;
   box-sizing: border-box;
+  padding: 1rem;
 
 	font-family: "Roboto", sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
   color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --white-smoke: #f7f7f7;
+  --engengrau: #0c1421;
+  --medium-sapphire: #3b63a8;
+  --aero: #7cb9f2;
 
-  padding: 2rem;
+  --low: #03a64a4a;
+  --medium: #ffbb005c;
+  --high: #f2310554;
+
+  --to-do: #4f5766;
+  --in-progress: #89c8ff;
+  --done: #60d336a8;
+}
+
+
+/* CLASSES TAILWIND */
+@theme {
+  --text-tiny: .5rem;
+  --spacing-tiny: .15rem; 
+
+  --color-to-do: #4f576636; 
+  --color-in-progress: #57aaf23b; 
+  --color-done: #60d33636; 
 }
 
 @media(min-width: 800px) {
@@ -30,13 +42,32 @@
 
 @media (prefers-color-scheme: light) {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    color: var(--engengrau);
+    background-color: var(--white-smoke);
   }
+
   a:hover {
-    color: #747bff;
+    color: var(--aero);
   }
+
   button {
-    background-color: #f9f9f9;
+    background-color: var(--aero);
+    color: var(--white-smoke);
+  }
+}
+
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: var(--white-smoke);
+    background-color: var(--engengrau);
+  }
+
+  a:hover {
+    color: var(--aero);
+  }
+
+  button {
+    background-color: var(--aero);
   }
 }

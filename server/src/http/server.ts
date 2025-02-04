@@ -11,7 +11,7 @@ import { getAllTaskRoute } from "./routes/get-all-task";
 import { newTaskRoute } from "./routes/create-task";
 import { deleteTaskRoute } from "./routes/delete-task";
 import { updateTaskRoute } from "./routes/update-task";
-import { getTaskByStatusRouter } from "./routes/get-task-by-priority";
+import { getTaskByStatusRouter } from "./routes/get-task-by-status";
 import { getTaskRouter } from "./routes/get-task";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
@@ -26,10 +26,11 @@ app.register(getAllStatusRoute); // /status
 app.register(getAllPrioritiesRouter); // /priorities
 
 // CRUD
-app.register(getAllTaskRoute); // /task
-app.register(getTaskRouter); // /task
-app.register(deleteTaskRoute); // /task
-app.register(updateTaskRoute); // /task
+app.register(newTaskRoute); // /task/POST
+app.register(getAllTaskRoute); // /tasks/GET
+app.register(getTaskRouter); // /task/GET:id
+app.register(deleteTaskRoute); // /task/DELETE:id
+app.register(updateTaskRoute); // /task/PUT:id
 
 // TASKS FILTERS
 app.register(getTaskByStatusRouter); // task-status
