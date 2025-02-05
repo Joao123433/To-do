@@ -7,7 +7,7 @@ export interface TaskDataContext {
 	task: TaskFetch[];
 	status: StatusFetch[];
 	priorities: PrioritiesFetch[];
-	// createTask: (cliente: TaskOmit) => Promise<void>;
-	// updateTask: (cliente: TaskFetch) => Promise<void>;
+	// createTask: (task: TaskOmit) => Promise<void>;
+	// updateTask: (task: TaskFetch) => Promise<void>;
 	// deleteTask: (id: string) => Promise<void>;
 }
