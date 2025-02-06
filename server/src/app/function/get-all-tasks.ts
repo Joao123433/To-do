@@ -10,7 +10,6 @@ export async function getAllTask() {
 			deadline: task.deadline,
 			status: task.status,
 			comment: task.comment,
-			finished: task.finished,
 			row: task.row,
 			createdAt: task.createdAt,
 			updatedAt: task.updatedAt,

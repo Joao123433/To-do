@@ -3,7 +3,7 @@ import { pgTable, text } from "drizzle-orm/pg-core";
 import { priority } from "./priority";
 import { status } from "./status";
 import { timestamp } from "drizzle-orm/pg-core";
-import { boolean } from "drizzle-orm/pg-core";
+import { integer } from "drizzle-orm/pg-core";
 
 export const task = pgTable("task", {
 	id: text("id")
@@ -18,8 +18,7 @@ export const task = pgTable("task", {
 		.references(() => status.id)
 		.notNull(),
 	comment: text("comment"),
-	finished: boolean("finished"),
-	row: text("row").notNull(),
+	row: integer("row").notNull(),
 	createdAt: timestamp("created_at").notNull(),
 	updatedAt: timestamp("updated_at").notNull(),
 });

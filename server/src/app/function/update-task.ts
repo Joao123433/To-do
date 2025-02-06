@@ -9,7 +9,6 @@ interface CreateTaskRequest {
 	deadline: string;
 	status: string;
 	comment: string;
-	finished: boolean;
 	updatedAt: number;
 }
 
@@ -20,7 +19,6 @@ export async function updateTask({
 	deadline,
 	status,
 	comment,
-	finished,
 	updatedAt,
 }: CreateTaskRequest) {
 	const updateTaskFetch = db
@@ -31,7 +29,6 @@ export async function updateTask({
 			deadline: new Date(deadline),
 			status,
 			comment,
-			finished,
 			updatedAt: new Date(updatedAt),
 		})
 		.where(eq(task.id, id))

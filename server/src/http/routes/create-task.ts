@@ -13,7 +13,6 @@ export const newTaskRoute: FastifyPluginAsyncZod = async (app) => {
 					deadline: z.string(),
 					status: z.string(),
 					comment: z.string(),
-					finished: z.boolean(),
 					createdAt: z.number(),
 					updatedAt: z.number(),
 				}),
@@ -27,7 +26,6 @@ export const newTaskRoute: FastifyPluginAsyncZod = async (app) => {
 				deadline,
 				status,
 				comment,
-				finished,
 				createdAt,
 				updatedAt,
 			} = req.body;
@@ -38,7 +36,6 @@ export const newTaskRoute: FastifyPluginAsyncZod = async (app) => {
 				deadline,
 				status,
 				comment,
-				finished,
 				createdAt,
 				updatedAt,
 			});

@@ -1,15 +1,8 @@
 import { desc, eq } from "drizzle-orm";
 import { db } from "../../db";
-import { status, task } from "../../db/schema";
+import { task } from "../../db/schema";
 
-async function generateNextRow(idStatus: string): Promise<string> {
-	const statusColumn = await db
-		.select({
-			column: status.column,
-		})
-		.from(status)
-		.where(eq(status.id, idStatus));
-
+async function generateNextRow(idStatus: string): Promise<number> {
 	const lastTask = await db
 		.select()
 		.from(task)
@@ -17,15 +10,13 @@ async function generateNextRow(idStatus: string): Promise<string> {
 		.orderBy(desc(task.row));
 
 	if (!lastTask || lastTask.length === 0) {
-		return `${statusColumn[0].column}1`;
+		return 1;
 	}
 
-	const lastRowValue = lastTask[0].row;
-	const rowPrefix = lastRowValue.slice(0, 1);
-	const lastNumber = Number(lastRowValue.slice(1));
+	const lastNumber = lastTask[0].row;
 	const nextNumber = lastNumber + 1;
 
-	return `${rowPrefix}${nextNumber}`;
+	return nextNumber;
 }
 
 interface CreateTaskRequest {
@@ -34,7 +25,6 @@ interface CreateTaskRequest {
 	deadline: string;
 	status: string;
 	comment: string;
-	finished: boolean;
 	createdAt: number;
 	updatedAt: number;
 }
@@ -45,7 +35,6 @@ export async function createTask({
 	deadline,
 	status,
 	comment,
-	finished,
 	createdAt,
 	updatedAt,
 }: CreateTaskRequest) {
@@ -59,7 +48,6 @@ export async function createTask({
 			deadline: new Date(deadline),
 			status,
 			comment,
-			finished,
 			row,
 			createdAt: new Date(createdAt),
 			updatedAt: new Date(updatedAt),

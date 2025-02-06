@@ -11,7 +11,6 @@ export async function getTask(idTask: string) {
 			deadline: task.deadline,
 			status: task.status,
 			comment: task.comment,
-			finished: task.finished,
 		})
 		.from(task)
 		.where(eq(task.id, idTask));

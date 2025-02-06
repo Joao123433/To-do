@@ -14,22 +14,13 @@ export const updateTaskRoute: FastifyPluginAsyncZod = async (app) => {
 					deadline: z.string(),
 					status: z.string(),
 					comment: z.string(),
-					finished: z.boolean(),
 					updatedAt: z.number(),
 				}),
 			},
 		},
 		async (req, res) => {
-			const {
-				id,
-				title,
-				priority,
-				deadline,
-				status,
-				comment,
-				finished,
-				updatedAt,
-			} = req.body;
+			const { id, title, priority, deadline, status, comment, updatedAt } =
+				req.body;
 
 			const { updateTaskFetch } = await updateTask({
 				id,
@@ -38,7 +29,6 @@ export const updateTaskRoute: FastifyPluginAsyncZod = async (app) => {
 				deadline,
 				status,
 				comment,
-				finished,
 				updatedAt,
 			});
 
