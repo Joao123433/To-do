@@ -4,9 +4,15 @@ import type { StatusFetch } from "./StatusFetch";
 import type { TaskOmit } from "./TaskOmit";
 
 export interface TaskDataContext {
-	task: TaskFetch[];
+	tasks: TaskFetch[];
 	status: StatusFetch[];
 	priorities: PrioritiesFetch[];
+	filterStatus: (id: string) => string;
+	filterPriority: (id: string) => string;
+	formatDate: (date: Date) => string;
+	newTaskModal: boolean;
+	isOpenNewTask: () => void;
+	onRequestCloseNewTask: () => void;
 	// createTask: (task: TaskOmit) => Promise<void>;
 	// updateTask: (task: TaskFetch) => Promise<void>;
 	// deleteTask: (id: string) => Promise<void>;

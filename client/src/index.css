@@ -21,17 +21,31 @@
   --to-do: #4f5766;
   --in-progress: #89c8ff;
   --done: #60d336a8;
+
+  --color-close-modal: transparent !important;
 }
 
 
 /* CLASSES TAILWIND */
 @theme {
   --text-tiny: .5rem;
-  --spacing-tiny: .15rem; 
+  --spacing-tiny: .15rem;
+  
+  --spacing-modal: 30rem; 
 
-  --color-to-do: #4f576636; 
-  --color-in-progress: #57aaf23b; 
-  --color-done: #60d33636; 
+  --color-to-do: #4f5766; 
+  --color-in-progress: #89c8ff; 
+  --color-done: #60d336a8;  
+
+  --color-engengrau: #0c1421;
+  
+  --color-container-to-do: #4f576636; 
+  --color-container-in-progress: #57aaf23b; 
+  --color-container-done: #60d33636; 
+
+  --color-Low: #03a64a4a;
+  --color-Medium: #ffbb005c;
+  --color-High: #f2310554;
 }
 
 @media(min-width: 800px) {
@@ -69,5 +83,9 @@
 
   button {
     background-color: var(--aero);
+  }
+
+  #closeModal {
+    background-color: var(--color-close-modal);
   }
 }
