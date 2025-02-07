@@ -13,7 +13,7 @@ export interface TaskDataContext {
 	newTaskModal: boolean;
 	isOpenNewTask: () => void;
 	onRequestCloseNewTask: () => void;
-	// createTask: (task: TaskOmit) => Promise<void>;
+	createTask: (task: TaskOmit) => Promise<void>;
 	// updateTask: (task: TaskFetch) => Promise<void>;
 	// deleteTask: (id: string) => Promise<void>;
 }

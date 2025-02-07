@@ -19,33 +19,76 @@
   --high: #f2310554;
 
   --to-do: #4f5766;
-  --in-progress: #89c8ff;
-  --done: #60d336a8;
-
-  --color-close-modal: transparent !important;
-}
-
-
-/* CLASSES TAILWIND */
-@theme {
-  --text-tiny: .5rem;
-  --spacing-tiny: .15rem;
-  
-  --spacing-modal: 30rem; 
-
-  --color-to-do: #4f5766; 
-  --color-in-progress: #89c8ff; 
-  --color-done: #60d336a8;  
-
-  --color-engengrau: #0c1421;
+  --in-progress: #5ca9ec;
+  --done: #6fd34ba8;
   
   --color-container-to-do: #4f576636; 
   --color-container-in-progress: #57aaf23b; 
   --color-container-done: #60d33636; 
 
-  --color-Low: #03a64a4a;
-  --color-Medium: #ffbb005c;
-  --color-High: #f2310554;
+  --color-close-modal: transparent !important;
+
+  .To-Do {
+    background-color: var(--to-do);
+    color: white;
+  }
+
+  .In-Progress {
+    background-color: var(--in-progress);
+    color: white;
+  }
+
+  .Done {
+    background-color: var(--done);
+    color: white;
+  }
+
+  .high {
+    background-color: var(--high);
+  }
+
+  .medium {
+    background-color: var(--medium);
+  }
+
+  .low {
+    background-color: var(--low);
+  }
+
+  .container-to-do {
+    background-color: #4f576636;
+  }
+
+  .container-in-progress {
+    background-color: #57aaf23b;
+  }
+
+  .container-done {
+    background-color: #60d33629;
+  }
+
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: block;
+    margin-right: -.5rem;
+  }
+
+  #closeModal {
+    background-color: var(--color-close-modal);
+  }
+}
+
+/* CLASSES TAILWIND */
+@theme {
+  --text-tiny: .5rem;
+  --spacing-tiny: .15rem;
+
+  --spacing-mobile-modal: 90%;
+  
+  --spacing-modal: 30rem;
+  --spacing-input-modal: 65%;
+
+  --color-engengrau: #0c1421;
 }
 
 @media(min-width: 800px) {
@@ -68,6 +111,11 @@
     background-color: var(--aero);
     color: var(--white-smoke);
   }
+  
+  #modalNew {
+    background-color: var(--medium-sapphire);
+    color: var(--white-smoke);
+  }
 }
 
 
@@ -84,8 +132,8 @@
   button {
     background-color: var(--aero);
   }
-
-  #closeModal {
-    background-color: var(--color-close-modal);
+  
+  #modalNew {
+    background-color: var(--medium-sapphire);
   }
 }

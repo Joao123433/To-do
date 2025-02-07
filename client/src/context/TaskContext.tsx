@@ -3,6 +3,8 @@ import type { PrioritiesFetch } from "../interfaces/PriotiritesFetch";
 import type { TaskDataContext } from "../interfaces/TaskDataContext";
 import type { StatusFetch } from "../interfaces/StatusFetch";
 import type { TaskFetch } from "../interfaces/TaskFetch";
+import type { TaskOmit } from "../interfaces/TaskOmit";
+
 import { createContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 
@@ -46,9 +48,17 @@ export function TaskProvider({ children }: ChildrenInterface) {
     setNewTaskModal(false)
   }
 
+  const createTask = async (taskData: TaskOmit) => {
+    const response = await api.post('task', {...taskData})
+
+    const task = response.data
+
+    setTask((prevState) => [...prevState, task])
+    onRequestCloseNewTask()
+  }
 
   return (
-    <TaskContext.Provider value={{tasks, status, priorities, filterStatus, filterPriority, formatDate, newTaskModal, isOpenNewTask, onRequestCloseNewTask}}>
+    <TaskContext.Provider value={{tasks, status, priorities, filterStatus, filterPriority, formatDate, newTaskModal, isOpenNewTask, onRequestCloseNewTask, createTask}}>
       {children}
     </TaskContext.Provider>
   )

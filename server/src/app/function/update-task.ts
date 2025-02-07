@@ -6,10 +6,10 @@ interface CreateTaskRequest {
 	id: string;
 	title: string;
 	priority: string;
-	deadline: string;
+	deadline: Date;
 	status: string;
 	comment: string;
-	updatedAt: number;
+	updatedAt: Date;
 }
 
 export async function updateTask({

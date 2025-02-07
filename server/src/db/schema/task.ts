@@ -13,12 +13,12 @@ export const task = pgTable("task", {
 	priority: text("priority")
 		.references(() => priority.id)
 		.notNull(),
-	deadline: timestamp("deadline").notNull(),
+	deadline: timestamp("deadline", { withTimezone: true }).notNull(),
 	status: text("status")
 		.references(() => status.id)
 		.notNull(),
 	comment: text("comment"),
 	row: integer("row").notNull(),
-	createdAt: timestamp("created_at").notNull(),
-	updatedAt: timestamp("updated_at").notNull(),
+	createdAt: timestamp("created_at", { withTimezone: true }).notNull(),
+	updatedAt: timestamp("updated_at", { withTimezone: true }).notNull(),
 });

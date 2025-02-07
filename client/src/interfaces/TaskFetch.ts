@@ -5,8 +5,5 @@ export interface TaskFetch {
 	deadline: Date;
 	status: string;
 	comment: string;
-	finished: boolean;
 	row: number;
-	createdAt: Date;
-	updatedAt: Date;
 }

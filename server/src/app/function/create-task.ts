@@ -22,11 +22,11 @@ async function generateNextRow(idStatus: string): Promise<number> {
 interface CreateTaskRequest {
 	title: string;
 	priority: string;
-	deadline: string;
+	deadline: Date;
 	status: string;
 	comment: string;
-	createdAt: number;
-	updatedAt: number;
+	createdAt: Date;
+	updatedAt: Date;
 }
 
 export async function createTask({
@@ -45,12 +45,12 @@ export async function createTask({
 		.values({
 			title,
 			priority,
-			deadline: new Date(deadline),
+			deadline,
 			status,
 			comment,
 			row,
-			createdAt: new Date(createdAt),
-			updatedAt: new Date(updatedAt),
+			createdAt,
+			updatedAt,
 		})
 		.returning();
 

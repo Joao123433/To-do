@@ -1,6 +1,7 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
 import { updateTask } from "../../app/function/update-task";
+import dayjs from "dayjs";
 
 export const updateTaskRoute: FastifyPluginAsyncZod = async (app) => {
 	app.put(
@@ -14,22 +15,21 @@ export const updateTaskRoute: FastifyPluginAsyncZod = async (app) => {
 					deadline: z.string(),
 					status: z.string(),
 					comment: z.string(),
-					updatedAt: z.number(),
 				}),
 			},
 		},
 		async (req, res) => {
-			const { id, title, priority, deadline, status, comment, updatedAt } =
-				req.body;
+			const { id, title, priority, deadline, status, comment } = req.body;
+			const currentDay = dayjs();
 
 			const { updateTaskFetch } = await updateTask({
 				id,
 				title,
 				priority,
-				deadline,
+				deadline: dayjs(deadline).toDate(),
 				status,
 				comment,
-				updatedAt,
+				updatedAt: currentDay.toDate(),
 			});
 
 			return updateTaskFetch;
