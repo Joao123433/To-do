@@ -4,7 +4,9 @@ import { task } from "../../db/schema";
 
 async function generateNextRow(idStatus: string): Promise<number> {
 	const lastTask = await db
-		.select()
+		.select({
+			row: task.row,
+		})
 		.from(task)
 		.where(eq(task.status, idStatus))
 		.orderBy(desc(task.row));

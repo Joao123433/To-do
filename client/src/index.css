@@ -10,7 +10,7 @@
   color-scheme: light dark;
 
   --white-smoke: #f7f7f7;
-  --engengrau: #0c1421;
+  --engengrau: #191919;
   --medium-sapphire: #3b63a8;
   --aero: #7cb9f2;
 
@@ -21,12 +21,11 @@
   --to-do: #4f5766;
   --in-progress: #5ca9ec;
   --done: #6fd34ba8;
-  
-  --color-container-to-do: #4f576636; 
-  --color-container-in-progress: #57aaf23b; 
-  --color-container-done: #60d33636; 
 
   --color-close-modal: transparent !important;
+
+  --color-modal-dark: #202020;
+  --color-modal-light: #f0f0f0;
 
   .To-Do {
     background-color: var(--to-do);
@@ -55,26 +54,9 @@
     background-color: var(--low);
   }
 
-  .container-to-do {
-    background-color: #4f576636;
-  }
-
-  .container-in-progress {
-    background-color: #57aaf23b;
-  }
-
-  .container-done {
-    background-color: #60d33629;
-  }
-
-  input[type="date"]::-webkit-inner-spin-button,
-  input[type="date"]::-webkit-calendar-picker-indicator {
-    display: block;
-    margin-right: -.5rem;
-  }
-
-  #closeModal {
-    background-color: var(--color-close-modal);
+  #dropdown {
+    background-color: white;
+    color: black;
   }
 }
 
@@ -88,7 +70,11 @@
   --spacing-modal: 30rem;
   --spacing-input-modal: 65%;
 
-  --color-engengrau: #0c1421;
+  --color-engengrau: #191919;
+
+  --color-to-do: #4f576638;
+  --color-in-progress: #57aaf221;
+  --color-done: #60d33621;
 }
 
 @media(min-width: 800px) {
@@ -113,8 +99,32 @@
   }
   
   #modalNew {
-    background-color: var(--medium-sapphire);
-    color: var(--white-smoke);
+    background-color: var(--color-modal-light);
+  }
+
+  .input-color {
+    background-color: var(--color-modal-light);
+  }
+
+  .input-color:hover {
+    background-color: #f7f7f7;
+  }
+
+  #closeModal {
+    background-color: transparent;
+    color: black;
+  }
+
+  #closeModal:hover {
+    background-color: transparent;
+    color: rgb(175, 175, 175);
+  }
+
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: block;
+    margin-right: -.5rem;
+    color: black;
   }
 }
 
@@ -134,6 +144,25 @@
   }
   
   #modalNew {
-    background-color: var(--medium-sapphire);
+    background-color: var(--color-modal-dark);
+  }
+
+  .input-color {
+    background-color: var(--color-modal-dark);
+  }
+
+  .input-color:hover {
+    background-color: #282828;
+  }
+
+  #closeModal {
+    background-color: var(--color-close-modal);
+  }
+
+  input[type="date"]::-webkit-inner-spin-button,
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    display: block;
+    margin-right: -.5rem;
+    color: black;
   }
 }

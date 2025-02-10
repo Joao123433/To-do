@@ -5,22 +5,32 @@ import type { StatusFetch } from "../interfaces/StatusFetch";
 import type { TaskFetch } from "../interfaces/TaskFetch";
 import type { TaskOmit } from "../interfaces/TaskOmit";
 
+export type TaskOmitRow = Omit<TaskFetch, "row">;
+
 import { createContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 
 export const TaskContext = createContext<TaskDataContext>({} as TaskDataContext)
 
 export function TaskProvider({ children }: ChildrenInterface) {
-  const [tasks, setTask] = useState<TaskFetch[]>([]);
+  const [tasks, setTasks] = useState<TaskFetch[]>([]);
   const [status, useStatus] = useState<StatusFetch[]>([]);
   const [priorities, setPriorities] = useState<PrioritiesFetch[]>([]);
   const [newTaskModal, setNewTaskModal] = useState(false)
+  const [editTaskModal, setEditTaskModal] = useState(false)
+  const [loader, setLoader] = useState(true)
+  const [elementEdit, setElementEdit] = useState("")
 
   useEffect(() => {
-    api.get("tasks").then((res) => setTask(res.data));
-    api.get("status").then((res) => useStatus(res.data));
-    api.get("priorities").then((res) => setPriorities(res.data));
-  }, []);
+    async function fetchMyAPI() {
+      await api.get("tasks").then((res) => setTasks(res.data));
+      await api.get("status").then((res) => useStatus(res.data));
+      await api.get("priorities").then((res) => setPriorities(res.data));
+      setLoader(false);
+    }
+    
+    fetchMyAPI()
+  }, [])
 
   const filterStatus = (id_status: string) => {
     const filteredStatus = status.filter(({ id }) => id === id_status)
@@ -53,12 +63,34 @@ export function TaskProvider({ children }: ChildrenInterface) {
 
     const task = response.data
 
-    setTask((prevState) => [...prevState, task])
+    setTasks((prevState) => [...prevState, task])
     onRequestCloseNewTask()
   }
 
+  const isOpenEditTask = (id: string) => {
+    setEditTaskModal(true)
+    setElementEdit(id)
+  }
+
+  const onRequestCloseEditTask = () => {
+    setEditTaskModal(false)
+    setElementEdit("")
+  }
+
+  const UpdateTask = async (taskData: TaskOmitRow) => {
+    const response = await api.put("task", {...taskData, updatedAt: new Date()})
+
+    const updateItem: TaskFetch[] = response.data
+
+    const itemsFilter = tasks.filter(task => (task.id !== updateItem[0].id))
+
+    setTasks([...itemsFilter, updateItem[0]])
+
+    onRequestCloseEditTask()
+  }
+
   return (
-    <TaskContext.Provider value={{tasks, status, priorities, filterStatus, filterPriority, formatDate, newTaskModal, isOpenNewTask, onRequestCloseNewTask, createTask}}>
+    <TaskContext.Provider value={{tasks, status, priorities, filterStatus, filterPriority, formatDate, newTaskModal, isOpenNewTask, onRequestCloseNewTask, createTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit, UpdateTask}}>
       {children}
     </TaskContext.Provider>
   )
