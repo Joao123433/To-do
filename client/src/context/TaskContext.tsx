@@ -80,17 +80,23 @@ export function TaskProvider({ children }: ChildrenInterface) {
   const UpdateTask = async (taskData: TaskOmitRow) => {
     const response = await api.put("task", {...taskData, updatedAt: new Date()})
 
-    const updateItem: TaskFetch[] = response.data
+    const updateTask: TaskFetch[] = response.data
 
-    const itemsFilter = tasks.filter(task => (task.id !== updateItem[0].id))
+    const taskFilter = tasks.filter(task => (task.id !== updateTask[0].id))
 
-    setTasks([...itemsFilter, updateItem[0]])
+    setTasks([...taskFilter, updateTask[0]])
 
     onRequestCloseEditTask()
   }
 
+  const deleteTask = async (id: string) => {
+    const response = await api.delete("task", { headers: { id: id,}})
+    const taskFilter = tasks.filter((task) => task.id !== response.data[0].id) 
+    setTasks([...taskFilter])
+  }
+
   return (
-    <TaskContext.Provider value={{tasks, status, priorities, filterStatus, filterPriority, formatDate, newTaskModal, isOpenNewTask, onRequestCloseNewTask, createTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit, UpdateTask}}>
+    <TaskContext.Provider value={{tasks, status, priorities, filterStatus, filterPriority, formatDate, newTaskModal, isOpenNewTask, onRequestCloseNewTask, createTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit, UpdateTask, deleteTask}}>
       {children}
     </TaskContext.Provider>
   )

@@ -13,7 +13,7 @@ import { ModalEditTask } from "../../components/ModalEditTask/Index";
 
 spiral.register('my-precious')
 export function Home() {
-  const {tasks, status, filterPriority, formatDate, newTaskModal, onRequestCloseNewTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit} = UseTask()
+  const {tasks, status, filterPriority, formatDate, newTaskModal, onRequestCloseNewTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit, deleteTask} = UseTask()
 
 
   return (
@@ -37,7 +37,7 @@ export function Home() {
                 </div>
               :
                 tasks.filter(({ status }) => status === statusElement.id).map(task => (
-                  <div className="bg-white text-black rounded-sm p-2 shadow-xl flex flex-col gap-1   animate__animated animate__fadeInUpBig" key={task.id}>
+                  <div className="bg-white text-black rounded-sm p-2 shadow-xl flex flex-col gap-1 animate__animated animate__fadeInUpBig" key={task.id}>
                     <div className="flex items-center justify-between">
                       <p className="font-bold">{task.title}</p>
                       <Menu>
@@ -48,7 +48,7 @@ export function Home() {
                           <button type="button" onClick={() => isOpenEditTask(task.id)} className="py-1 border-0 outline-0 hover:brightness-75 duration-300" id="dropdown">
                             Edit
                           </button>
-                          <button type="button" onClick={() => console.log(11)} className="py-1 border-0 outline-0 hover:brightness-75 duration-300" id="dropdown">
+                          <button type="button" onClick={() => deleteTask(task.id)} className="py-1 border-0 outline-0 hover:brightness-75 duration-300" id="dropdown">
                             Delete
                           </button>
                         </MenuList>

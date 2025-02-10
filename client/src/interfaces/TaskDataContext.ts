@@ -22,4 +22,5 @@ export interface TaskDataContext {
 	onRequestCloseEditTask: () => void;
 	elementEdit: string;
 	UpdateTask: (task: TaskOmitRow) => Promise<void>;
+	deleteTask: (id: string) => void;
 }

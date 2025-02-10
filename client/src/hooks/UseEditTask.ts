@@ -14,20 +14,30 @@ export function UseEditTask(idTask: string) {
 	const { UpdateTask } = UseTask();
 
 	useEffect(() => {
-		api
-			.get("task", {
-				headers: {
-					id: idTask,
-				},
-			})
-			.then((res) => {
-				setIdEdit(res.data[0].id);
-				setTaskEdit(res.data[0].title);
-				setSelectPriorityEdit(res.data[0].priority);
-				setDeadlineEdit(res.data[0].deadline);
-				setSelectStatusEdit(res.data[0].status);
-				setCommentEdit(res.data[0].comment);
-			});
+		setTaskEdit("");
+		setSelectPriorityEdit("");
+		setDeadlineEdit("");
+		setSelectStatusEdit("");
+		setCommentEdit("");
+
+		setIdEdit("");
+
+		(async () => {
+			await api
+				.get("task", {
+					headers: {
+						id: idTask,
+					},
+				})
+				.then((res) => {
+					setTaskEdit(res.data[0].title);
+					setSelectPriorityEdit(res.data[0].priority);
+					setDeadlineEdit(res.data[0].deadline);
+					setSelectStatusEdit(res.data[0].status);
+					setCommentEdit(res.data[0].comment);
+					setIdEdit(res.data[0].id);
+				});
+		})();
 	}, [idTask]);
 
 	const handleClickEdit = () => {

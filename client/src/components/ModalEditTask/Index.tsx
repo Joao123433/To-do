@@ -78,7 +78,7 @@ export function ModalEditTask({ isOpen, onRequestClose, idTask }: ModalEditTaskI
           <FontAwesomeIcon icon={faMessage} size="sm" />
             Comment
           </label>
-          <textarea rows={4} className='w-input-modal py-1 px-2 rounded duration-300 input-color resize-none' onChange={(e) => setCommentEdit(e.target.value)}>{commentEdit}</textarea>
+          <input type="text" className='w-input-modal py-1 px-2 rounded duration-300 input-color resize-none' onChange={(e) => setCommentEdit(e.target.value)} value={commentEdit} />
         </div> 
 
         <div className="flex flex-row justify-end gap-5">
