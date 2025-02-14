@@ -40,7 +40,10 @@ export function Home() {
                   <div className="bg-white text-black rounded-sm p-2 shadow-xl flex flex-col gap-1 animate__animated animate__fadeInUpBig" key={task.id}>
                     <div className="flex items-center justify-between">
                       <p className="font-bold">{task.title}</p>
-                      <Menu>
+                      <Menu animate={{
+                        mount: { y: 0 },
+                        unmount: { y: 25 },
+                      }}>
                         <MenuHandler className="hover:scale-100 duration-300" id="closeModal">
                           <FontAwesomeIcon icon={faEllipsis} />
                         </MenuHandler>

@@ -14,29 +14,34 @@ export function UseEditTask(idTask: string) {
 	const { UpdateTask } = UseTask();
 
 	useEffect(() => {
+		if (!idTask) return;
+
 		setTaskEdit("");
 		setSelectPriorityEdit("");
 		setDeadlineEdit("");
 		setSelectStatusEdit("");
 		setCommentEdit("");
-
 		setIdEdit("");
 
 		(async () => {
-			await api
-				.get("task", {
-					headers: {
-						id: idTask,
-					},
-				})
-				.then((res) => {
-					setTaskEdit(res.data[0].title);
-					setSelectPriorityEdit(res.data[0].priority);
-					setDeadlineEdit(res.data[0].deadline);
-					setSelectStatusEdit(res.data[0].status);
-					setCommentEdit(res.data[0].comment);
-					setIdEdit(res.data[0].id);
+			try {
+				const res = await api.get("task", {
+					headers: { id: idTask },
 				});
+
+				// Verifica se os dados retornados são válidos
+				if (res.data && res.data.length > 0) {
+					const task = res.data[0];
+					setTaskEdit(task.title || "");
+					setSelectPriorityEdit(task.priority || "");
+					setDeadlineEdit(task.deadline || "");
+					setSelectStatusEdit(task.status || "");
+					setCommentEdit(task.comment || "");
+					setIdEdit(task.id || "");
+				}
+			} catch (error) {
+				console.error("Error to find task:", error);
+			}
 		})();
 	}, [idTask]);
 

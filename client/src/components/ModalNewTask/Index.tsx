@@ -51,8 +51,9 @@ export function ModalNewTask({ isOpen, onRequestClose }: ModalNewTaskInterface) 
             className='w-input-modal py-1 px-2 rounded duration-300 input-color' 
             value={selectPriority} 
             onChange={(e) => setSelectPriority(e.target.value)}
+            required
           >
-            <option value={'0'}>&nbsp;</option>
+            <option value={""} disabled>&nbsp;</option>
             {priorities.map(priority => (
               <option value={priority.id} key={priority.id}>{priority.title}</option>
             ))}
@@ -68,7 +69,8 @@ export function ModalNewTask({ isOpen, onRequestClose }: ModalNewTaskInterface) 
             type="date" 
             className="w-input-modal py-1 px-2 rounded duration-300 input-color" 
             value={deadline} 
-            onChange={(e) => setDeadline(e.target.value)} required
+            onChange={(e) => setDeadline(e.target.value)} 
+            required
           />
         </div> 
 
@@ -81,8 +83,9 @@ export function ModalNewTask({ isOpen, onRequestClose }: ModalNewTaskInterface) 
             className='w-input-modal py-1 px-2 rounded duration-300 input-color' 
             value={selectStatus} 
             onChange={(e) => setSelectStatus(e.target.value)}
+            required
           >
-            <option>&nbsp;</option>
+            <option value={""} disabled>&nbsp;</option>
             {status.map(element => (
               <option value={element.id} key={element.id}>{element.title}</option>
             ))}
@@ -94,14 +97,7 @@ export function ModalNewTask({ isOpen, onRequestClose }: ModalNewTaskInterface) 
            <FontAwesomeIcon icon={faMessage} size="sm" />
             Comment
           </label>
-          <textarea 
-            rows={4} 
-            className='w-input-modal py-1 px-2 rounded duration-300 input-color resize-none' 
-            value={comment} 
-            onChange={(e) => setComment(e.target.value)}
-          >
-            {comment}
-          </textarea>
+          <input type="text" className='w-input-modal py-1 px-2 rounded duration-300 input-color resize-none' onChange={(e) => setComment(e.target.value)} value={comment} required />
         </div> 
 
         <div className="flex flex-row justify-end gap-5">

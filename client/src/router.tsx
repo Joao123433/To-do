@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import { Home } from "./pages/Home/Index";
 import { RootLayout } from "./components/RootLayout/Index";
+import { HighPriority } from "./pages/Home/HighPriority";
+import { Next7Days } from "./pages/Home/Next7Days";
 
 export const router = createBrowserRouter([
   {
@@ -9,7 +11,15 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home />
+        element: <Home />,
+      }, 
+      {
+        path: '/highpriority',
+        element: <HighPriority />
+      }, 
+      {
+        path: '/next7days',
+        element: <Next7Days />
       }
     ]
   }

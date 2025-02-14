@@ -20,13 +20,13 @@ export function UseNewTask() {
 			comment: comment,
 		};
 
+		createTask(NewTask);
+
 		setTask("New Task");
 		setSelectPriority("");
 		setDeadline("");
 		setSelectStatus("");
 		setComment("");
-
-		createTask(NewTask);
 	};
 
 	return {
