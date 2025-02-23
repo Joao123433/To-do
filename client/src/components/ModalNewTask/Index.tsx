@@ -103,7 +103,7 @@ export function ModalNewTask({ isOpen, onRequestClose }: ModalNewTaskInterface) 
         <div className="flex flex-row justify-end gap-5">
           <button 
             type="submit" 
-            className="font-bold px-3 py-2 rounded w-1/4 hover:brightness-75 duration-300" 
+            className="font-bold px-3 py-2 rounded w-1/4 hover:brightness-75 duration-300 pl-3.5" 
             onClick={handleClick}
           >
             Salvar

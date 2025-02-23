@@ -59,12 +59,13 @@ export function TaskProvider({ children }: ChildrenInterface) {
   }
 
   const createTask = async (taskData: TaskOmit) => {
+    
     const response = await api.post('task', {...taskData})
-
+    
     const task = response.data
+    onRequestCloseNewTask()
 
     setTasks((prevState) => [...prevState, task])
-    onRequestCloseNewTask()
   }
 
   const isOpenEditTask = (id: string) => {
@@ -92,7 +93,8 @@ export function TaskProvider({ children }: ChildrenInterface) {
   const deleteTask = async (id: string) => {
     const response = await api.delete("task", { headers: { id: id,}})
     const taskFilter = tasks.filter((task) => task.id !== response.data[0].id) 
-    setTasks([...taskFilter])
+
+    taskFilter ? setTasks([...taskFilter]) : setTasks([])
   }
 
   return (

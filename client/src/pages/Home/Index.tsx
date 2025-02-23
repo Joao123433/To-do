@@ -37,7 +37,7 @@ export function Home() {
                 </div>
               :
                 tasks.filter(({ status }) => status === statusElement.id).map(task => (
-                  <div className="bg-white text-black rounded-sm p-2 shadow-xl flex flex-col gap-1 animate__animated animate__fadeInUpBig" key={task.id}>
+                  <div className="bg-white text-black rounded-sm p-2 shadow-xl flex flex-col gap-1" key={task.id}>
                     <div className="flex items-center justify-between">
                       <p className="font-bold">{task.title}</p>
                       <Menu animate={{
