@@ -80,8 +80,7 @@ export function HighPriority() {
         (
           <section className="grid grid-cols-1 gap-5 md:gap-3 2xl:grid-cols-2 mt-24">
             <div className="flex items-center justify-center">
-              {/* biome-ignore lint/style/useSelfClosingElements: <explanation> */}
-              <my-precious color="white" className="col-end-4"></my-precious>
+              <my-precious color="white" className="col-end-4">asdf</my-precious>
             </div>
           </section>
         )

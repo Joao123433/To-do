@@ -5,36 +5,8 @@
     {
       "idx": 0,
       "version": "7",
-      "when": 1738522781229,
-      "tag": "0000_flaky_the_santerians",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "7",
-      "when": 1738530186254,
-      "tag": "0001_amused_cammi",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "7",
-      "when": 1738536032464,
-      "tag": "0002_tranquil_fenris",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "7",
-      "when": 1738536502129,
-      "tag": "0003_chunky_quicksilver",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "7",
-      "when": 1738881798855,
-      "tag": "0004_zippy_selene",
+      "when": 1740406939030,
+      "tag": "0000_optimal_fenris",
       "breakpoints": true
     }
   ]

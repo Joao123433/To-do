@@ -1,57 +1,82 @@
-# Teste para Desenvolvedor Full Stack
+# 📦 To-do List
 
-Bem-vindo ao teste para desenvolvedor Full Stack! O objetivo deste teste é avaliar suas habilidades com **React** e **Node.js** na criação de um web app simples de controle de tarefas.
+Breve descrição do projeto.
 
-## 📌 Descrição do Projeto
+## 🚀 Tecnologias
 
-Você deve desenvolver um **web app de controle de tarefas** com três colunas:
-- **Pendente**
-- **Em andamento**
-- **Feito**
+Este projeto utiliza as seguintes tecnologias:
 
-Cada tarefa deve conter:
-- **Título**
-- **Descrição**
+- **Frontend:** React + Tailwind CSS
+- **Backend:** Node.js + Fastify
+- **ORM:** Drizzle ORM
+- **Banco de Dados:** PostgreSQL (rodando em um container Docker)
+- **Validação de Dados:** Zod
+- **Requisições HTTP:** Axios
 
-### 🎯 Funcionalidades
-- Adicionar uma nova tarefa
-- Editar o título e a descrição de uma tarefa
-- Mover uma tarefa entre as colunas
-- Excluir uma tarefa
-- O estado das tarefas pode ser armazenado na memória (não é necessário usar banco de dados)
+## 📂 Estrutura do Projeto
 
-## 🏗️ Tecnologias e Requisitos
-
-O projeto deve ser desenvolvido como um **monorepo** utilizando as seguintes tecnologias:
-- **Front-end**: React
-- **Back-end**: Node.js
-- **Gerenciador de pacotes**: npm, yarn
-
-## 🚀 Como Executar o Projeto
-
-### 1️⃣ Clonar o repositório
-```sh
- git clone https://github.com/ighor-next/challenge.git
- cd challenge
+```
+/project-root
+│── frontend/  # Aplicação React + Tailwind
+│── backend/   # API Fastify + Drizzle ORM
+│── README.md  # Documentação Principal
 ```
 
-### 2️⃣ Criar um branch para sua solução
+## 🛠️ Como Configurar
+
+### 1️⃣ Pré-requisitos
+
+Certifique-se de ter instalado:
+- [Node.js](https://nodejs.org/)
+- [Docker](https://www.docker.com/)
+
+### 2️⃣ Clonar o Repositório
+
 ```sh
- git checkout -b minha-solucao
+git clone https://github.com/Joao123433/challenge.git
+cd challenge
+git checkout -b minha-solucao
 ```
 
-### 7️⃣ Abrir um Pull Request
-Acesse o repositório no GitHub e abra um Pull Request da sua branch **minha-solucao** para a branch principal do projeto.
+### 3️⃣ Configurar o Banco de Dados com Docker e do Backend
 
-## 🎯 O que Avaliaremos?
-- Estrutura e organização do código
-- Boas práticas de desenvolvimento
-- Uso adequado do React e Node.js
-- Clareza e legibilidade do código
-- Manutenibilidade do projeto
-- Uso de commits bem descritos
+```sh
+cd /server
+yarn # Instala todas as dependencias
+docker-compose up -d
+cp .env.example .env  # Configurar variáveis de ambiente
+yarn drizzle-kit generate
+yarn drizzle-kit migrate
+yarn seed
+yarn dev
+```
 
-## 📝 Considerações Finais
+Isso iniciará a o server.
 
-Sinta-se à vontade para adicionar melhorias ao projeto caso ache necessário. Boa sorte! 🚀
+### 5️⃣ Configurar o Frontend
 
+```sh
+cd client
+yarn # Instala todas as dependencias
+yarn dev
+```
+
+Acesse a aplicação em `http://localhost:5173`.
+
+## 🔗 API Endpoints
+
+| Método | Rota        | Descrição          |
+|--------|------------|--------------------|
+| GET    | /task     | Lista itens        |
+| POST   | /task     | Cria um item       |
+| GET    | /task/:id | Obtém um item      |
+| PUT    | /task/:id | Atualiza um item   |
+| DELETE | /task/:id | Remove um item     |
+
+## 🛠️ Comandos Úteis
+
+| Comando               | Descrição                    |
+|-----------------------|----------------------------|
+| `docker-compose up -d` | Inicia o banco de dados    |
+| `yarn dev`         | Inicia o frontend/backend  |
+| `yarn build`       | Compila a aplicação        |
