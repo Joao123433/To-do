@@ -41,8 +41,8 @@ git checkout -b minha-solucao
 ```sh
 cd /server
 yarn  # Instala todas as dependencias
-docker-compose up -d
 cp .env.example .env  # Configurar variáveis de ambiente
+docker-compose up -d
 yarn drizzle-kit generate
 yarn drizzle-kit migrate
 yarn seed
