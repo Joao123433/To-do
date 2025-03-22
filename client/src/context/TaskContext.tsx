@@ -28,7 +28,7 @@ export function TaskProvider({ children }: ChildrenInterface) {
       await api.get("priorities").then((res) => setPriorities(res.data));
       setLoader(false);
     }
-    
+
     fetchMyAPI()
   }, [])
 
@@ -47,7 +47,7 @@ export function TaskProvider({ children }: ChildrenInterface) {
   const formatDate = (dateString: Date) => {
     const date = new Date(dateString)
 
-    return  new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(date);
+    return new Intl.DateTimeFormat("en-US", { month: "long", day: "numeric", year: "numeric" }).format(date);
   }
 
   const isOpenNewTask = () => {
@@ -59,9 +59,9 @@ export function TaskProvider({ children }: ChildrenInterface) {
   }
 
   const createTask = async (taskData: TaskOmit) => {
-    
-    const response = await api.post('task', {...taskData})
-    
+
+    const response = await api.post('task', { ...taskData })
+
     const task = response.data
     onRequestCloseNewTask()
 
@@ -79,7 +79,7 @@ export function TaskProvider({ children }: ChildrenInterface) {
   }
 
   const UpdateTask = async (taskData: TaskOmitRow) => {
-    const response = await api.put("task", {...taskData, updatedAt: new Date()})
+    const response = await api.put("task", { ...taskData, updatedAt: new Date() })
 
     const updateTask: TaskFetch[] = response.data
 
@@ -91,14 +91,14 @@ export function TaskProvider({ children }: ChildrenInterface) {
   }
 
   const deleteTask = async (id: string) => {
-    const response = await api.delete("task", { headers: { id: id,}})
-    const taskFilter = tasks.filter((task) => task.id !== response.data[0].id) 
+    const response = await api.delete("task", { headers: { id: id, } })
+    const taskFilter = tasks.filter((task) => task.id !== response.data[0].id)
 
     taskFilter ? setTasks([...taskFilter]) : setTasks([])
   }
 
   return (
-    <TaskContext.Provider value={{tasks, status, priorities, filterStatus, filterPriority, formatDate, newTaskModal, isOpenNewTask, onRequestCloseNewTask, createTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit, UpdateTask, deleteTask}}>
+    <TaskContext.Provider value={{ tasks, status, priorities, filterStatus, filterPriority, formatDate, newTaskModal, isOpenNewTask, onRequestCloseNewTask, createTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit, UpdateTask, deleteTask }}>
       {children}
     </TaskContext.Provider>
   )
