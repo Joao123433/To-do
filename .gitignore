@@ -4,5 +4,8 @@
 # ignore .env directory
 .vscode
 
+# ignore dist directory
+dist
+
 # ignore migrations directory 
 .migrations
