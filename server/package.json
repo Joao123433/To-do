@@ -2,7 +2,7 @@
   "scripts": {
     "dev": "tsx watch --env-file .env ./src/http/server.ts",
     "seed": "tsx watch --env-file .env ./src/db/seed.ts",
-    "build": "tsup src",
+    "build": "yarn tsup src",
     "start": "node dist/http/server.js",
     "ci": "yarn install --frozen-lockfile"
   },
