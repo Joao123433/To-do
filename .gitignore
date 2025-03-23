@@ -3,6 +3,3 @@
 
 # ignore .env directory
 .vscode
-
-# ignore migrations directory 
-.migrations
