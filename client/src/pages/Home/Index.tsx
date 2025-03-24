@@ -2,7 +2,7 @@ import { faCircle, faEllipsis } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { UseTask } from "../../hooks/UseTask";
 import { ModalNewTask } from "../../components/ModalNewTask/Index";
-import { spiral } from 'ldrs'
+import { tailspin } from 'ldrs'
 import 'animate.css';
 import {
   Menu,
@@ -11,10 +11,9 @@ import {
 } from "@material-tailwind/react";
 import { ModalEditTask } from "../../components/ModalEditTask/Index";
 
-spiral.register('my-precious')
+tailspin.register('my-precious')
 export function Home() {
-  const {tasks, status, filterPriority, formatDate, newTaskModal, onRequestCloseNewTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit, deleteTask} = UseTask()
-
+  const {tasks, status, filterPriority, formatDate, newTaskModal, onRequestCloseNewTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit, deleteTask} = UseTask();
 
   return (
     <>
@@ -37,7 +36,10 @@ export function Home() {
                 </div>
               :
                 tasks.filter(({ status }) => status === statusElement.id).map(task => (
-                  <div className="bg-white text-black rounded-sm p-2 shadow-xl flex flex-col gap-1" key={task.id}>
+                  <div 
+                    className={"bg-white text-black rounded-sm p-2 shadow-xl flex flex-col gap-1"} 
+                    key={task.id}
+                  >
                     <div className="flex items-center justify-between">
                       <p className="font-bold">{task.title}</p>
                       <Menu animate={{
@@ -78,5 +80,5 @@ export function Home() {
       <ModalNewTask isOpen={newTaskModal} onRequestClose={onRequestCloseNewTask} />
       <ModalEditTask isOpen={editTaskModal} onRequestClose={onRequestCloseEditTask} idTask={elementEdit} />
     </>
-  )
+  );
 }
