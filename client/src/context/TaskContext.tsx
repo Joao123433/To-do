@@ -23,9 +23,9 @@ export function TaskProvider({ children }: ChildrenInterface) {
 
   useEffect(() => {
     async function fetchMyAPI() {
-      await api.get("tasks").then((res) => setTasks(res.data));
       await api.get("status").then((res) => useStatus(res.data));
       await api.get("priorities").then((res) => setPriorities(res.data));
+      await api.get("tasks").then((res) => setTasks(res.data));
       setLoader(false);
     }
 
@@ -40,6 +40,9 @@ export function TaskProvider({ children }: ChildrenInterface) {
 
   const filterPriority = (id_priority: string) => {
     const filteredPriorities = priorities.filter(({ id }) => id === id_priority)
+
+    console.log(filteredPriorities)
+    console.log(priorities)
 
     return filteredPriorities[0].title
   }
