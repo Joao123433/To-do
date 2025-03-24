@@ -1,23 +1,17 @@
-import { useEffect, useState } from "react";
-import { api } from "../services/api";
-import type { TaskFetch } from "../interfaces/TaskFetch";
 import { UseTask } from "./UseTask";
+import dayjs from "dayjs";
 
 export function UseTaskNext7Days() {
-	const [taskNext7Days, setTaskNext7Days] = useState<TaskFetch[]>([]);
 	const { tasks } = UseTask();
 
-	// biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-	useEffect(() => {
-		(async () => {
-			const res = await api.get("next7days");
+	const taskNext7Days = tasks.filter((task) => {
+		const today = dayjs().startOf("day");
+		const nextWeek = dayjs().add(7, "day").endOf("day");
 
-			// Verifica se os dados retornados são válidos
-			if (res.data) {
-				setTaskNext7Days(res.data);
-			}
-		})();
-	}, [tasks]);
+		const taskDeadline = dayjs(task.deadline);
+
+		return taskDeadline.isSame(today, "day") || taskDeadline.isBefore(nextWeek);
+	});
 
 	return { taskNext7Days };
 }
