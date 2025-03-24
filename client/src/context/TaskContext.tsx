@@ -41,9 +41,6 @@ export function TaskProvider({ children }: ChildrenInterface) {
   const filterPriority = (id_priority: string) => {
     const filteredPriorities = priorities.filter(({ id }) => id === id_priority)
 
-    console.log(filteredPriorities)
-    console.log(priorities)
-
     return filteredPriorities[0].title
   }
 
