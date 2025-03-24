@@ -59,11 +59,11 @@ export function TaskProvider({ children }: ChildrenInterface) {
   }
 
   const createTask = async (taskData: TaskOmit) => {
+    onRequestCloseNewTask()
 
     const response = await api.post('task', { ...taskData })
 
     const task = response.data
-    onRequestCloseNewTask()
 
     setTasks((prevState) => [...prevState, task])
   }
@@ -79,6 +79,8 @@ export function TaskProvider({ children }: ChildrenInterface) {
   }
 
   const UpdateTask = async (taskData: TaskOmitRow) => {
+    onRequestCloseEditTask()
+
     const response = await api.put("task", { ...taskData, updatedAt: new Date() })
 
     const updateTask: TaskFetch[] = response.data
@@ -86,8 +88,6 @@ export function TaskProvider({ children }: ChildrenInterface) {
     const taskFilter = tasks.filter(task => (task.id !== updateTask[0].id))
 
     setTasks([...taskFilter, updateTask[0]])
-
-    onRequestCloseEditTask()
   }
 
   const deleteTask = async (id: string) => {
