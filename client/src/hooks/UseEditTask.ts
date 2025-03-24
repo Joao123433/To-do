@@ -1,7 +1,6 @@
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { UseTask } from "./UseTask";
-import { api } from "../services/api";
 
 export function UseEditTask(idTask: string) {
 	const [idEdit, setIdEdit] = useState("");
@@ -11,39 +10,19 @@ export function UseEditTask(idTask: string) {
 	const [selectStatusEdit, setSelectStatusEdit] = useState("");
 	const [commentEdit, setCommentEdit] = useState("");
 
-	const { UpdateTask } = UseTask();
+	const { tasks, UpdateTask } = UseTask();
+	const taskFiltered = tasks.filter((task) => task.id === idTask)[0];
 
 	useEffect(() => {
-		if (!idTask) return;
-
-		setTaskEdit("");
-		setSelectPriorityEdit("");
-		setDeadlineEdit("");
-		setSelectStatusEdit("");
-		setCommentEdit("");
-		setIdEdit("");
-
-		(async () => {
-			try {
-				const res = await api.get("task", {
-					headers: { id: idTask },
-				});
-
-				// Verifica se os dados retornados são válidos
-				if (res.data && res.data.length > 0) {
-					const task = res.data[0];
-					setTaskEdit(task.title || "");
-					setSelectPriorityEdit(task.priority || "");
-					setDeadlineEdit(task.deadline || "");
-					setSelectStatusEdit(task.status || "");
-					setCommentEdit(task.comment || "");
-					setIdEdit(task.id || "");
-				}
-			} catch (error) {
-				console.error("Error to find task:", error);
-			}
-		})();
-	}, [idTask]);
+		if (taskFiltered) {
+			setIdEdit(taskFiltered.id);
+			setTaskEdit(taskFiltered.title);
+			setSelectPriorityEdit(taskFiltered.priority);
+			setDeadlineEdit(dayjs(taskFiltered.deadline).format("YYYY-MM-DD"));
+			setSelectStatusEdit(taskFiltered.status);
+			setCommentEdit(taskFiltered.comment);
+		}
+	}, [taskFiltered]);
 
 	const handleClickEdit = () => {
 		const EditTask = {
