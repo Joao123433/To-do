@@ -40,7 +40,7 @@ app.register(getNext7DaysTasksRouter); // next 7 days
 app
 	.listen({
 		port: process.env.port ? Number(process.env.port) : 3000,
-		host: "0.0.0.0",
+		// host: "0.0.0.0",
 	})
 	.then(() => {
 		console.log("Server Running!!!");

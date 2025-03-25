@@ -23,6 +23,8 @@ export function ModalEditTask({ isOpen, onRequestClose, idTask }: ModalEditTaskI
     handleClickEdit,
   } = UseEditTask(idTask)
 
+  const currentDate = dayjs().format('YYYY-MM-DD')
+
   return (
     <Modal
       isOpen={isOpen} 
@@ -57,7 +59,7 @@ export function ModalEditTask({ isOpen, onRequestClose, idTask }: ModalEditTaskI
             <FontAwesomeIcon icon={faCalendarDay} size="sm" />
             Deadline
           </label>
-          <input type="date" className="w-input-modal py-1 px-2 rounded duration-300 input-color" value={dayjs(deadlineEdit).format("YYYY-MM-DD")} onChange={(e) => setDeadlineEdit(e.target.value)} required/>
+          <input type="date" className="w-input-modal py-1 px-2 rounded duration-300 input-color" min={currentDate} value={dayjs(deadlineEdit).format("YYYY-MM-DD")} onChange={(e) => setDeadlineEdit(e.target.value)} required/>
         </div> 
 
         <div className="flex flex-row gap-2 items-center justify-between">

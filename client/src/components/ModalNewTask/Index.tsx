@@ -4,6 +4,7 @@ import { faCalendarDay, faCircleExclamation, faMessage, faSpinner, faXmark } fro
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { UseTask } from '../../hooks/UseTask';
 import { UseNewTask } from '../../hooks/UseNewTask';
+import dayjs from 'dayjs';
 
 export function ModalNewTask({ isOpen, onRequestClose }: ModalNewTaskInterface) {
   const { status, priorities } = UseTask()
@@ -20,6 +21,8 @@ export function ModalNewTask({ isOpen, onRequestClose }: ModalNewTaskInterface) 
 		setComment,
 		handleClick
   } = UseNewTask()
+
+  const currentDate = dayjs().format('YYYY-MM-DD')
 
   return (
     <Modal
@@ -69,6 +72,7 @@ export function ModalNewTask({ isOpen, onRequestClose }: ModalNewTaskInterface) 
             type="date" 
             className="w-input-modal py-1 px-2 rounded duration-300 input-color" 
             value={deadline} 
+            min={currentDate}
             onChange={(e) => setDeadline(e.target.value)} 
             required
           />
