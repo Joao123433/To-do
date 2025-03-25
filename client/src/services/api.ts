@@ -1,6 +1,6 @@
 import axios from "axios";
 
 export const api = axios.create({
-	// baseURL: "http://localhost:3000/",
-	baseURL: "https://to-do-list-4op0.onrender.com/",
+	// https://to-do-list-4op0.onrender.com/
+	baseURL: import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/",
 });
