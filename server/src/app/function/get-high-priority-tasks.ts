@@ -1,6 +1,7 @@
-import { eq } from "drizzle-orm";
+import { and, asc, eq, gte } from "drizzle-orm";
 import { db } from "../../db";
 import { priority, task } from "../../db/schema";
+import dayjs from "dayjs";
 
 async function fetchIdPriority(): Promise<string> {
 	const highPriorityId = await db
@@ -17,6 +18,7 @@ async function fetchIdPriority(): Promise<string> {
 
 export async function getHighPriorityTasks() {
 	const idHighPriority = await fetchIdPriority();
+	const today = dayjs().startOf("day").toDate();
 
 	const taksHighPriority = await db
 		.select({
@@ -28,7 +30,8 @@ export async function getHighPriorityTasks() {
 			comment: task.comment,
 		})
 		.from(task)
-		.where(eq(task.priority, idHighPriority));
+		.where(and(eq(task.priority, idHighPriority), gte(task.deadline, today)))
+		.orderBy(asc(task.deadline));
 
 	return { taksHighPriority };
 }

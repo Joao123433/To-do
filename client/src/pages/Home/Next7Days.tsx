@@ -55,7 +55,7 @@ export function Next7Days() {
                       </td>
                       <td className="px-6 py-4">
                         <Menu animate={{mount: { y: 0 }, unmount: { y: 25 }}}>
-                          <MenuHandler className="hover:scale-100 duration-300" id="closeModal">
+                          <MenuHandler className="hover:scale-100 duration-300 cursor-pointer" id="closeModal">
                             <FontAwesomeIcon icon={faEllipsis} />
                           </MenuHandler>
                           <MenuList className="flex flex-col gap-2" placeholder={undefined} onPointerEnterCapture={undefined} onPointerLeaveCapture={undefined}>

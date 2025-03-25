@@ -1,7 +1,11 @@
+import { asc, gte } from "drizzle-orm";
 import { db } from "../../db";
 import { task } from "../../db/schema";
+import dayjs from "dayjs";
 
 export async function getAllTask() {
+	const today = dayjs().startOf("day").toDate();
+
 	const allTask = await db
 		.select({
 			id: task.id,
@@ -14,7 +18,9 @@ export async function getAllTask() {
 			createdAt: task.createdAt,
 			updatedAt: task.updatedAt,
 		})
-		.from(task);
+		.from(task)
+		.where(gte(task.deadline, today))
+		.orderBy(asc(task.deadline));
 
 	return { allTask };
 }

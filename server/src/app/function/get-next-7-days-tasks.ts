@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { db } from "../../db";
 import { task } from "../../db/schema";
-import { between } from "drizzle-orm";
+import { and, asc, between, gte } from "drizzle-orm";
 
 export async function getNext7DaysTasks() {
 	const currentDate = dayjs().startOf("day").toDate();
@@ -17,7 +17,13 @@ export async function getNext7DaysTasks() {
 			comment: task.comment,
 		})
 		.from(task)
-		.where(between(task.deadline, currentDate, OneWeekLater));
+		.where(
+			and(
+				between(task.deadline, currentDate, OneWeekLater),
+				gte(task.deadline, currentDate),
+			),
+		)
+		.orderBy(asc(task.deadline));
 
 	return { filterTasks };
 }
