@@ -1,0 +1,62 @@
+import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
+import z from "zod";
+import { db } from "../../../db";
+import { users } from "../../../db/schema";
+import { eq } from "drizzle-orm";
+import dayjs from "dayjs";
+import { hash } from "bcrypt";
+
+export const RegisterRouter: FastifyPluginAsyncZod = async (app) => {
+	app.post(
+		"/register",
+		{
+			schema: {
+				body: z.object({
+					email: z.string().email(),
+					password: z.string(),
+					name: z.string(),
+				}),
+			},
+		},
+		async (req, res) => {
+			const { email, password, name } = req.body;
+			const hashedPassword = await hash(password, 10);
+
+			const [existingUser] = await db
+				.select()
+				.from(users)
+				.where(eq(users.email, email));
+
+			if (existingUser) {
+				res.status(401).send({ message: "invalid credentials" });
+			}
+
+			const [user] = await db
+				.insert(users)
+				.values({
+					email,
+					password: hashedPassword,
+					name,
+					createdAt: dayjs(new Date()).format("YYYY-MM-DD"),
+					updatedAt: dayjs(new Date()).format("YYYY-MM-DD"),
+				})
+				.returning();
+
+			const token = app.jwt.sign({
+				id: user.id,
+				email: user.email,
+				name: user.name,
+			});
+
+			res.setCookie("token", token, {
+				httpOnly: true,
+				secure: process.env.NODE_ENV === "production",
+				sameSite: "strict",
+				path: "/",
+				maxAge: 60 * 60,
+			});
+
+			return res.status(201).send({ message: "User registered successfully" });
+		},
+	);
+};

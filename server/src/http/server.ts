@@ -14,10 +14,29 @@ import { updateTaskRoute } from "./routes/update-task";
 import { getTaskRouter } from "./routes/get-task";
 import { getTaskHighPrioirty } from "./routes/get-task-by-status";
 import { getNext7DaysTasksRouter } from "./routes/get-next-7-days-tasks";
+import fastifyJwt from "@fastify/jwt";
+import fastifyCookie from "@fastify/cookie";
+import { RegisterRouter } from "./routes/users/register";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
-app.register(fastifyCors, { origin: "*" });
+// CORS
+app.register(fastifyCors, {
+	origin: process.env.FRONTEND_URL || "http://localhost:5173",
+	credentials: true,
+});
+
+// JWT
+app.register(fastifyJwt, {
+	secret: String(process.env.JWT_SECRET),
+});
+
+// FASTIFY COOKIES
+app.register(fastifyCookie, {
+	secret: process.env.COOKIE_SECRET,
+	hook: "onRequest",
+	parseOptions: {},
+});
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
@@ -32,6 +51,9 @@ app.register(getAllTaskRoute); // /tasks/GET
 app.register(getTaskRouter); // /task/GET:id
 app.register(deleteTaskRoute); // /task/DELETE:id
 app.register(updateTaskRoute); // /task/PUT:id
+
+// USERS
+app.register(RegisterRouter);
 
 // TASKS FILTERS
 app.register(getTaskHighPrioirty); // task-status

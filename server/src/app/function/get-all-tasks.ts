@@ -6,6 +6,8 @@ import dayjs from "dayjs";
 export async function getAllTask() {
 	const today = dayjs().startOf("day").toDate();
 
+	console.log(today);
+
 	const allTask = await db
 		.select({
 			id: task.id,

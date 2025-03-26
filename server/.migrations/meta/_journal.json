@@ -8,6 +8,27 @@
       "when": 1740406939030,
       "tag": "0000_optimal_fenris",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1742959154390,
+      "tag": "0001_illegal_hedge_knight",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1742960809686,
+      "tag": "0002_complex_maximus",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1742960985230,
+      "tag": "0003_bouncy_nemesis",
+      "breakpoints": true
     }
   ]
 }
