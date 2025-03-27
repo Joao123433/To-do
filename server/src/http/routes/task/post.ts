@@ -1,9 +1,9 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import { createTask } from "../../app/function/create-task";
 import dayjs from "dayjs";
+import { createTask } from "../../../app/function/create-task";
 
-export const newTaskRoute: FastifyPluginAsyncZod = async (app) => {
+export const PostTaskRouter: FastifyPluginAsyncZod = async (app) => {
 	app.post(
 		"/task",
 		{
@@ -33,6 +33,8 @@ export const newTaskRoute: FastifyPluginAsyncZod = async (app) => {
 			});
 
 			return taskInsert;
+
+			// res.status(201).send({ message: "Task created successfully" });
 		},
 	);
 };

@@ -10,10 +10,20 @@ import {
   MenuList,
 } from "@material-tailwind/react";
 import { ModalEditTask } from "../../components/ModalEditTask/Index";
+import dayjs from "dayjs";
 
 tailspin.register('my-precious')
 export function Home() {
   const {tasks, status, filterPriority, formatDate, newTaskModal, onRequestCloseNewTask, loader, editTaskModal, isOpenEditTask, onRequestCloseEditTask, elementEdit, deleteTask} = UseTask();
+
+  const filterTasks = tasks.filter((task) => {
+    const today = dayjs().startOf("day");
+
+    const taskDeadline = dayjs(task.deadline).startOf("day");
+
+    return (
+      (taskDeadline.isSame(today, "day") || taskDeadline.isAfter(today, "day")));
+  })
 
   return (
     <>
@@ -27,15 +37,15 @@ export function Home() {
                   <FontAwesomeIcon icon={faCircle} className="text-tiny" />
                   {statusElement.title}
                 </div>
-                <p>{tasks.filter(task => task.status === statusElement.id).length}</p>
+                <p>{filterTasks.filter(task => task.status === statusElement.id).length}</p>
               </div>
 
-              {tasks.filter(({ status }) => status === statusElement.id).length === 0 ?
+              {filterTasks.filter(({ status }) => status === statusElement.id).length === 0 ?
                 <div className="rounded-sm p-2 flex flex-col gap-1">
                   No Tasks
                 </div>
               :
-                tasks.filter(({ status }) => status === statusElement.id).map(task => (
+              filterTasks.filter(({ status }) => status === statusElement.id).map(task => (
                   <div 
                     className={"bg-white text-black rounded-sm p-2 shadow-xl flex flex-col gap-1"} 
                     key={task.id}

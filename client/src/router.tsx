@@ -3,6 +3,7 @@ import { Home } from "./pages/Home/Index";
 import { RootLayout } from "./components/RootLayout/Index";
 import { HighPriority } from "./pages/Home/HighPriority";
 import { Next7Days } from "./pages/Home/Next7Days";
+import { Archive } from "./pages/Home/Archives";
 
 export const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ export const router = createBrowserRouter([
       {
         path: '/next7days',
         element: <Next7Days />
+      },
+      {
+        path: '/archive',
+        element: <Archive />
       }
     ]
   }

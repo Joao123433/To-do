@@ -21,7 +21,7 @@ export async function updateTask({
 	comment,
 	updatedAt,
 }: CreateTaskRequest) {
-	const updateTaskFetch = db
+	const [updateTaskFetch] = await db
 		.update(task)
 		.set({
 			title,

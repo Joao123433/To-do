@@ -1,9 +1,9 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import { updateTask } from "../../app/function/update-task";
 import dayjs from "dayjs";
+import { updateTask } from "../../../app/function/update-task";
 
-export const updateTaskRoute: FastifyPluginAsyncZod = async (app) => {
+export const PutTaskRouter: FastifyPluginAsyncZod = async (app) => {
 	app.put(
 		"/task",
 		{
@@ -33,6 +33,8 @@ export const updateTaskRoute: FastifyPluginAsyncZod = async (app) => {
 			});
 
 			return updateTaskFetch;
+
+			// res.status(200).send({ message: "task edited successfully" });
 		},
 	);
 };

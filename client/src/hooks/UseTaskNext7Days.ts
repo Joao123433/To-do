@@ -6,11 +6,15 @@ export function UseTaskNext7Days() {
 
 	const taskNext7Days = tasks.filter((task) => {
 		const today = dayjs().startOf("day");
-		const nextWeek = dayjs().add(7, "day").endOf("day");
+		const nextWeek = dayjs().add(7, "day").startOf("day");
 
-		const taskDeadline = dayjs(task.deadline);
+		const taskDeadline = dayjs(task.deadline).startOf("day");
 
-		return taskDeadline.isSame(today, "day") || taskDeadline.isBefore(nextWeek);
+		return (
+			(taskDeadline.isSame(today, "day") ||
+				taskDeadline.isAfter(today, "day")) &&
+			taskDeadline.isBefore(nextWeek, "day")
+		);
 	});
 
 	return { taskNext7Days };

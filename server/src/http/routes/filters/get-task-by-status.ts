@@ -1,7 +1,7 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
-import { getHighPriorityTasks } from "../../app/function/get-high-priority-tasks";
+import { getHighPriorityTasks } from "../../../app/function/get-high-priority-tasks";
 
-export const getTaskHighPrioirty: FastifyPluginAsyncZod = async (app) => {
+export const getTaskHighPrioirtyRouter: FastifyPluginAsyncZod = async (app) => {
 	app.get("/high-priority", async (req, res) => {
 		const { taksHighPriority } = await getHighPriorityTasks();
 		return taksHighPriority;

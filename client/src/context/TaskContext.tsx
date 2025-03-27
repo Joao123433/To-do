@@ -83,11 +83,11 @@ export function TaskProvider({ children }: ChildrenInterface) {
 
     const response = await api.put("task", { ...taskData, updatedAt: new Date() })
 
-    const updateTask: TaskFetch[] = response.data
+    const updateTask: TaskFetch = response.data
 
-    const taskFilter = tasks.filter(task => (task.id !== updateTask[0].id))
+    const taskFilter = tasks.filter(task => (task.id !== updateTask.id))
 
-    setTasks([...taskFilter, updateTask[0]])
+    setTasks([...taskFilter, updateTask])
   }
 
   const deleteTask = async (id: string) => {

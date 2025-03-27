@@ -41,6 +41,7 @@ export function UseEditTask(idTask: string) {
 		setSelectStatusEdit("");
 		setCommentEdit("");
 
+		console.log(EditTask);
 		UpdateTask(EditTask);
 	};
 

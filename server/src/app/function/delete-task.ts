@@ -3,7 +3,7 @@ import { db } from "../../db";
 import { task } from "../../db/schema";
 
 export async function deleteTask(idTask: string) {
-	const deleteTaskFetch = db
+	const deleteTaskFetch = await db
 		.delete(task)
 		.where(eq(task.id, idTask))
 		.returning();

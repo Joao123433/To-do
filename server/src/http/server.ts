@@ -1,29 +1,39 @@
-import fastifyCors from "@fastify/cors";
 import fastify from "fastify";
 import {
 	type ZodTypeProvider,
 	validatorCompiler,
 	serializerCompiler,
 } from "fastify-type-provider-zod";
-import { getAllStatusRoute } from "./routes/get-all-status";
-import { getAllPrioritiesRouter } from "./routes/get-all-priorities";
-import { getAllTaskRoute } from "./routes/get-all-task";
-import { newTaskRoute } from "./routes/create-task";
-import { deleteTaskRoute } from "./routes/delete-task";
-import { updateTaskRoute } from "./routes/update-task";
-import { getTaskRouter } from "./routes/get-task";
-import { getTaskHighPrioirty } from "./routes/get-task-by-status";
-import { getNext7DaysTasksRouter } from "./routes/get-next-7-days-tasks";
+
+import fastifyCors from "@fastify/cors";
 import fastifyJwt from "@fastify/jwt";
 import fastifyCookie from "@fastify/cookie";
+
 import { RegisterRouter } from "./routes/users/register";
+import { LoginRouter } from "./routes/users/login";
+import { LogoutRouter } from "./routes/users/logout";
+import { AuthMiddleware } from "./middleware/AuthMiddleware";
+
+import { getTaskHighPrioirtyRouter } from "./routes/filters/get-task-by-status";
+import { getNext7DaysTasksRouter } from "./routes/filters/get-next-7-days-tasks";
+
+import { StatusRouter } from "./routes/status";
+import { TaskRouter } from "./routes/tasks";
+import { PrioritiesRouter } from "./routes/priorities";
+import { ArchivedTasksrouter } from "./routes/filters/archived-tasks";
+
+import { PostTaskRouter } from "./routes/task/post";
+import { GetTaskRouter } from "./routes/task/get";
+import { DeleteTaskRouter } from "./routes/task/delete";
+import { PutTaskRouter } from "./routes/task/put";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 // CORS
 app.register(fastifyCors, {
-	origin: process.env.FRONTEND_URL || "http://localhost:5173",
+	origin: true,
 	credentials: true,
+	methods: ["GET", "POST", "PUT", "DELETE"],
 });
 
 // JWT
@@ -38,26 +48,32 @@ app.register(fastifyCookie, {
 	parseOptions: {},
 });
 
+// MIDDLEWARE
+// app.addHook("onRequest", AuthMiddleware);
+
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
 
 // ROTAS
-app.register(getAllStatusRoute); // /status
-app.register(getAllPrioritiesRouter); // /priorities
+app.register(StatusRouter); // /status
+app.register(PrioritiesRouter); // /priorities
+app.register(TaskRouter); // /tasks/GET
 
-// CRUD
-app.register(newTaskRoute); // /task/POST
-app.register(getAllTaskRoute); // /tasks/GET
-app.register(getTaskRouter); // /task/GET:id
-app.register(deleteTaskRoute); // /task/DELETE:id
-app.register(updateTaskRoute); // /task/PUT:id
+// CRUD - TASK
+app.register(PostTaskRouter); // /task/POST
+app.register(GetTaskRouter); // /task/GET:id
+app.register(DeleteTaskRouter); // /task/DELETE:id
+app.register(PutTaskRouter); // /task/PUT:id
 
 // USERS
 app.register(RegisterRouter);
+app.register(LoginRouter);
+app.register(LogoutRouter);
 
 // TASKS FILTERS
-app.register(getTaskHighPrioirty); // task-status
+app.register(getTaskHighPrioirtyRouter); // task-status
 app.register(getNext7DaysTasksRouter); // next 7 days
+app.register(ArchivedTasksrouter); // Archived
 
 app
 	.listen({

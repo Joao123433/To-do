@@ -7,7 +7,7 @@ export async function getNext7DaysTasks() {
 	const currentDate = dayjs().startOf("day").toDate();
 	const OneWeekLater = dayjs().add(7, "day").startOf("day").toDate();
 
-	const filterTasks = db
+	const filterTasks = await db
 		.select({
 			id: task.id,
 			title: task.title,

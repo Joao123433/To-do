@@ -1,8 +1,8 @@
 import type { FastifyPluginAsyncZod } from "fastify-type-provider-zod";
 import z from "zod";
-import { getTask } from "../../app/function/get-task";
+import { getTask } from "../../../app/function/get-task";
 
-export const getTaskRouter: FastifyPluginAsyncZod = async (app) => {
+export const GetTaskRouter: FastifyPluginAsyncZod = async (app) => {
 	app.get(
 		"/task",
 		{
@@ -17,6 +17,7 @@ export const getTaskRouter: FastifyPluginAsyncZod = async (app) => {
 
 			const { taskFetch } = await getTask(id);
 
+			// res.status(200).send({ message: "User returned" });
 			return taskFetch;
 		},
 	);

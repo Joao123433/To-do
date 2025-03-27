@@ -28,7 +28,7 @@ export const RegisterRouter: FastifyPluginAsyncZod = async (app) => {
 				.where(eq(users.email, email));
 
 			if (existingUser) {
-				res.status(401).send({ message: "invalid credentials" });
+				res.status(401).send({ message: "User already exists" });
 			}
 
 			const [user] = await db
@@ -42,11 +42,14 @@ export const RegisterRouter: FastifyPluginAsyncZod = async (app) => {
 				})
 				.returning();
 
-			const token = app.jwt.sign({
-				id: user.id,
-				email: user.email,
-				name: user.name,
-			});
+			const token = app.jwt.sign(
+				{
+					id: user.id,
+					email: user.email,
+					name: user.name,
+				},
+				{ expiresIn: "1h" },
+			);
 
 			res.setCookie("token", token, {
 				httpOnly: true,

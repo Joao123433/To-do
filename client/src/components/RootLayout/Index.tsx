@@ -16,6 +16,7 @@ export function RootLayout() {
           <Link to='/' className={`hover:brightness-50 duration-150 ease-in font-bold ${pathname === "/" ? "border-b-2" : ""}`}>Home</Link>
           <Link to='/highpriority' className={`hover:brightness-50 duration-150 ease-in font-bold ${pathname === "/highpriority" ? "border-b-2" : ""}`}>High Priority</Link>
           <Link to='/next7days' className={`hover:brightness-50 duration-150 ease-in font-bold ${pathname === "/next7days" ? "border-b-2" : ""}`}>Next 7 Days</Link>
+          <Link to='/archive' className={`hover:brightness-50 duration-150 ease-in font-bold ${pathname === "/archive" ? "border-b-2" : ""}`}>Archive</Link>
           <button type="button" className="font-bold py-tiny px-4 mb-1 rounded-sm hover:brightness-75 duration-300" onClick={() => isOpenNewTask()}>New</button>
         </nav>
       </header>
