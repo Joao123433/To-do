@@ -5,7 +5,7 @@ import { HighPriority } from "./pages/Home/HighPriority";
 import { Next7Days } from "./pages/Home/Next7Days";
 import { Archive } from "./pages/Home/Archives";
 import { PrivateRoute } from "./components/PrivateRoute";
-import { Login } from "./pages/Home/Login";
+import { LoginPage } from "./pages/Home/Login";
 
 export const router = createBrowserRouter([
   {
@@ -36,6 +36,6 @@ export const router = createBrowserRouter([
   },
   {
     path: "/login",
-    element: <Login />,
+    element: <LoginPage />,
   }
 ])
