@@ -59,13 +59,15 @@ export function TaskProvider({ children }: ChildrenInterface) {
   }
 
   const createTask = async (taskData: TaskOmit) => {
-    onRequestCloseNewTask()
+    onRequestCloseNewTask();
 
-    const response = await api.post('task', { ...taskData })
+    try {
+      const response = await api.post('task', { ...taskData });
 
-    const task = response.data
-
-    setTasks((prevState) => [...prevState, task])
+      if (response.status === 200) setTasks((prevState) => [...prevState, response.data.taskInsert]);
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }
   }
 
   const isOpenEditTask = (id: string) => {
@@ -81,20 +83,27 @@ export function TaskProvider({ children }: ChildrenInterface) {
   const UpdateTask = async (taskData: TaskOmitRow) => {
     onRequestCloseEditTask()
 
-    const response = await api.put("task", { ...taskData, updatedAt: new Date() })
+    try {
+      const response = await api.put("task", { ...taskData, updatedAt: new Date() })
+      console.log(response)
+      const taskFilter = tasks.filter(task => (task.id !== response.data.updateTaskFetch.id))
 
-    const updateTask: TaskFetch = response.data
-
-    const taskFilter = tasks.filter(task => (task.id !== updateTask.id))
-
-    setTasks([...taskFilter, updateTask])
+      if (response.status === 200) setTasks([...taskFilter, response.data.updateTaskFetch])
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }
   }
 
   const deleteTask = async (id: string) => {
-    const response = await api.delete("task", { headers: { id: id, } })
-    const taskFilter = tasks.filter((task) => task.id !== response.data[0].id)
+    try {
+      const response = await api.delete("task", { headers: { id: id, } })
+      const taskFilter = tasks.filter((task) => task.id !== response.data.deleteTaskFetch[0].id)
 
-    taskFilter ? setTasks([...taskFilter]) : setTasks([])
+      
+      if (response.status === 200) taskFilter ? setTasks([...taskFilter]) : setTasks([])
+    } catch (error) {
+      console.error("Error creating task:", error);
+    }
   }
 
   return (

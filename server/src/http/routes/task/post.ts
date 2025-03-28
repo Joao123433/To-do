@@ -22,19 +22,31 @@ export const PostTaskRouter: FastifyPluginAsyncZod = async (app) => {
 			const { title, priority, deadline, status, comment } = req.body;
 			const currentDay = dayjs();
 
-			const { taskInsert } = await createTask({
-				title,
-				priority,
-				deadline: dayjs(deadline).toDate(),
-				status,
-				comment,
-				createdAt: currentDay.toDate(),
-				updatedAt: currentDay.toDate(),
-			});
+			try {
+				const { taskInsert } = await createTask({
+					title,
+					priority,
+					deadline: dayjs(deadline).toDate(),
+					status,
+					comment,
+					createdAt: currentDay.toDate(),
+					updatedAt: currentDay.toDate(),
+				});
 
-			return taskInsert;
+				if (!taskInsert) throw new Error("Error creating task");
 
-			// res.status(201).send({ message: "Task created successfully" });
+				res.status(200).send({
+					message: "Task created successfully",
+					taskInsert,
+				});
+			} catch (error) {
+				res.status(500).send({
+					message:
+						error instanceof Error
+							? `Error creating task: ${error.message}`
+							: "An unexpected error occurred while creating task",
+				});
+			}
 		},
 	);
 };

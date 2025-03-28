@@ -22,19 +22,31 @@ export const PutTaskRouter: FastifyPluginAsyncZod = async (app) => {
 			const { id, title, priority, deadline, status, comment } = req.body;
 			const currentDay = dayjs();
 
-			const { updateTaskFetch } = await updateTask({
-				id,
-				title,
-				priority,
-				deadline: dayjs(deadline).toDate(),
-				status,
-				comment,
-				updatedAt: currentDay.toDate(),
-			});
+			try {
+				const { updateTaskFetch } = await updateTask({
+					id,
+					title,
+					priority,
+					deadline: dayjs(deadline).toDate(),
+					status,
+					comment,
+					updatedAt: currentDay.toDate(),
+				});
 
-			return updateTaskFetch;
+				if (!updateTaskFetch) throw new Error("Error updating task");
 
-			// res.status(200).send({ message: "task edited successfully" });
+				res.status(200).send({
+					message: "Task updated successfully",
+					updateTaskFetch,
+				});
+			} catch (error) {
+				res.status(500).send({
+					message:
+						error instanceof Error
+							? `Error updating task: ${error.message}`
+							: "An unexpected error occurred while updating task",
+				});
+			}
 		},
 	);
 };

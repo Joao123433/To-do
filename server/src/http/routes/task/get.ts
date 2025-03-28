@@ -15,10 +15,23 @@ export const GetTaskRouter: FastifyPluginAsyncZod = async (app) => {
 		async (req, res) => {
 			const id = req.headers.id;
 
-			const { taskFetch } = await getTask(id);
+			try {
+				const { taskFetch } = await getTask(id);
 
-			// res.status(200).send({ message: "User returned" });
-			return taskFetch;
+				if (!taskFetch) throw new Error("Task not found");
+
+				res.status(200).send({
+					message: "Task retrieved successfully.",
+					taskFetch,
+				});
+			} catch (error) {
+				res.status(500).send({
+					message:
+						error instanceof Error
+							? `Error retrieving task: ${error.message}`
+							: "An unexpected error occurred while retrieving task.",
+				});
+			}
 		},
 	);
 };
