@@ -4,6 +4,8 @@ import { RootLayout } from "./components/RootLayout/Index";
 import { HighPriority } from "./pages/Home/HighPriority";
 import { Next7Days } from "./pages/Home/Next7Days";
 import { Archive } from "./pages/Home/Archives";
+import { PrivateRoute } from "./components/PrivateRoute";
+import { Login } from "./pages/Home/Login";
 
 export const router = createBrowserRouter([
   {
@@ -13,7 +15,7 @@ export const router = createBrowserRouter([
       {
         index: true,
         element: <Home />,
-      }, 
+      },
       {
         path: '/highpriority',
         element: <HighPriority />
@@ -24,8 +26,16 @@ export const router = createBrowserRouter([
       },
       {
         path: '/archive',
-        element: <Archive />
+        element: (
+          <PrivateRoute>
+            <Archive />
+          </PrivateRoute>
+        ),
       }
     ]
+  },
+  {
+    path: "/login",
+    element: <Login />,
   }
 ])
