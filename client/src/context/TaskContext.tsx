@@ -64,9 +64,9 @@ export function TaskProvider({ children }: ChildrenInterface) {
     try {
       const response = await api.post('task', { ...taskData });
 
-      // console.log(response)
+      console.log(response)
 
-      if (response.status === 200) setTasks((prevState) => [...prevState, response.data]);
+      if (response.status === 200) setTasks((prevState) => [...prevState, response.data.taskInsert]);
     } catch (error) {
       console.error("Error creating task:", error);
     }
@@ -88,9 +88,9 @@ export function TaskProvider({ children }: ChildrenInterface) {
     try {
       const response = await api.put("task", { ...taskData, updatedAt: new Date() })
 
-      // console.log(response)
+      console.log(response)
       
-      const taskFilter = tasks.filter(task => (task.id !== response.data.id))
+      const taskFilter = tasks.filter(task => (task.id !== response.data.updateTaskFetch.id))
 
       if (response.status === 200) setTasks([...taskFilter, response.data.updateTaskFetch])
     } catch (error) {
