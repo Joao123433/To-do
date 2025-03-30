@@ -49,7 +49,7 @@ app.register(fastifyCookie, {
 });
 
 // MIDDLEWARE
-// app.addHook("onRequest", AuthMiddleware);
+app.addHook("onRequest", AuthMiddleware);
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);

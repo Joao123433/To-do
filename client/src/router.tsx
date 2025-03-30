@@ -6,11 +6,16 @@ import { Next7Days } from "./pages/Home/Next7Days";
 import { Archive } from "./pages/Home/Archives";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { LoginPage } from "./pages/Home/Login";
+import { Signup } from "./pages/Home/Signup";
 
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <RootLayout />,
+    element: (
+      <PrivateRoute>
+        <RootLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         index: true,
@@ -26,16 +31,16 @@ export const router = createBrowserRouter([
       },
       {
         path: '/archive',
-        element: (
-          <PrivateRoute>
-            <Archive />
-          </PrivateRoute>
-        ),
+        element: <Archive />,
       }
     ]
   },
   {
     path: "/login",
     element: <LoginPage />,
+  },
+  {
+    path: "/signup",
+    element: <Signup />,
   }
 ])

@@ -8,7 +8,7 @@ export function RootLayout() {
   const { isOpenNewTask } = UseTask()
 
   return (
-    <>
+    <div className="p-4 md:p-16">
       <header className="border-b-1">
         <FontAwesomeIcon icon={faList} className="text-5xl mb-4"/>
         <h1 className="text-2xl mb-2 font-bold">Basic To-Do List</h1>
@@ -23,6 +23,6 @@ export function RootLayout() {
       <main className="w-full h-full py-3" id="main">
         <Outlet />
       </main>
-    </>
+    </div>
   )
 }
