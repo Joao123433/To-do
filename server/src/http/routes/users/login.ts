@@ -43,13 +43,15 @@ export const LoginRouter: FastifyPluginAsyncZod = async (app) => {
 					email: user.email,
 					name: user.name,
 				},
-				{ expiresIn: "1h" },
+				{ expiresIn: "1h", algorithm: "HS256" },
 			);
+
+			console.log(token);
 
 			res.setCookie("token", token, {
 				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "strict",
+				secure: true,
+				sameSite: "none",
 				path: "/",
 				maxAge: 60 * 60,
 			});

@@ -29,6 +29,9 @@ import { PutTaskRouter } from "./routes/task/put";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
 
+// MIDDLEWARE
+// app.addHook("onRequest", AuthMiddleware);
+
 // CORS
 app.register(fastifyCors, {
 	origin: true,
@@ -36,20 +39,16 @@ app.register(fastifyCors, {
 	methods: ["GET", "POST", "PUT", "DELETE"],
 });
 
-// JWT
-app.register(fastifyJwt, {
-	secret: String(process.env.JWT_SECRET),
-});
-
 // FASTIFY COOKIES
 app.register(fastifyCookie, {
-	secret: process.env.COOKIE_SECRET,
-	hook: "onRequest",
 	parseOptions: {},
 });
 
-// MIDDLEWARE
-app.addHook("onRequest", AuthMiddleware);
+// JWT
+app.register(fastifyJwt, {
+	secret: String(process.env.JWT_SECRET),
+	sign: { algorithm: "HS256" },
+});
 
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);

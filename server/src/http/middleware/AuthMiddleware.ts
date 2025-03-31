@@ -6,17 +6,19 @@ export async function AuthMiddleware(req: FastifyRequest, res: FastifyReply) {
 	}
 
 	try {
-		if (!req.cookies) {
-			throw new Error("Cookies are not enabled");
-		}
-
 		const token = req.cookies.token;
-		if (!token) {
-			throw new Error("Missing Token");
+
+		console.log(token);
+		console.log(req);
+
+		if (token === undefined) {
+			return res.status(401).send({ message: "Missing Token" });
 		}
 
-		await req.jwtVerify();
+		const decoded = await req.jwtVerify();
+		console.log(decoded);
+		req.user = decoded;
 	} catch (err) {
-		res.status(401).send({ message: "Invalid or missing token" });
+		res.status(403).send({ message: "Invalid or missing token" });
 	}
 }

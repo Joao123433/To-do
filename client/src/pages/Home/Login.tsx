@@ -4,14 +4,14 @@ import { useState } from "react";
 
 export function LoginPage() {
   const { login, isAuthenticated } = useAuth();
-  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const verifySubmit = name === "" || password === "";
+  const verifySubmit = email === "" || password === "";
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login(name, password);
+    login(email, password);
   };
 
   if (isAuthenticated) {
@@ -24,8 +24,8 @@ export function LoginPage() {
         <div className="bg-white text-neutral-400 rounded-2xl flex flex-col gap-7 px-10 py-10 lg:w-login-width">
           <h1 className="text-3xl font-bold text-black">Log in now</h1>
           <div className="flex flex-col gap-1">
-            <label htmlFor="name ">Name</label>
-            <input type="text" id="name" className="border-2 p-2 rounded-lg" value={name} onChange={(e) => setName(e.target.value)} required />
+            <label htmlFor="email">E-mail</label>
+            <input type="text" id="email" className="border-2 p-2 rounded-lg" value={email} onChange={(e) => setEmail(e.target.value)} required />
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="password">Password</label>

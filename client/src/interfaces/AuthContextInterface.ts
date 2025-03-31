@@ -1,5 +1,5 @@
 export interface AuthContextInterface {
 	isAuthenticated: boolean;
-	login: (name: string, password: string) => void;
+	login: (email: string, password: string) => void;
 	logout: () => void;
 }

@@ -9,28 +9,47 @@ export type TaskOmitRow = Omit<TaskFetch, "row">;
 
 import { createContext, useEffect, useState } from "react";
 import { api } from "../services/api";
+import { useAuth } from "../hooks/UseAuth";
 
 export const TaskContext = createContext<TaskDataContext>({} as TaskDataContext)
 
 export function TaskProvider({ children }: ChildrenInterface) {
   const [tasks, setTasks] = useState<TaskFetch[]>([]);
-  const [status, useStatus] = useState<StatusFetch[]>([]);
+  const [status, setStatus] = useState<StatusFetch[]>([]);
   const [priorities, setPriorities] = useState<PrioritiesFetch[]>([]);
   const [newTaskModal, setNewTaskModal] = useState(false)
   const [editTaskModal, setEditTaskModal] = useState(false)
   const [loader, setLoader] = useState(true)
   const [elementEdit, setElementEdit] = useState("")
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     async function fetchMyAPI() {
-      await api.get("status").then((res) => useStatus(res.data));
-      await api.get("priorities").then((res) => setPriorities(res.data));
-      await api.get("tasks").then((res) => setTasks(res.data));
-      setLoader(false);
+      if (!isAuthenticated) {
+        setTasks([]);
+        setStatus([]);
+        setPriorities([]);
+        return;
+      }
+
+      try {
+        const statusResponse = await api.get("status", { withCredentials: true });
+        setStatus(statusResponse.data);
+
+        const prioritiesResponse = await api.get("priorities", { withCredentials: true });
+        setPriorities(prioritiesResponse.data);
+
+        const tasksResponse = await api.get("tasks", { withCredentials: true });
+        setTasks(tasksResponse.data);
+
+        setLoader(false);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     }
 
-    fetchMyAPI()
-  }, [])
+    fetchMyAPI();
+  }, [isAuthenticated]);
 
   const filterStatus = (id_status: string) => {
     const filteredStatus = status.filter(({ id }) => id === id_status)
@@ -64,8 +83,6 @@ export function TaskProvider({ children }: ChildrenInterface) {
     try {
       const response = await api.post('task', { ...taskData });
 
-      console.log(response)
-
       if (response.status === 200) setTasks((prevState) => [...prevState, response.data.taskInsert]);
     } catch (error) {
       console.error("Error creating task:", error);
@@ -88,8 +105,6 @@ export function TaskProvider({ children }: ChildrenInterface) {
     try {
       const response = await api.put("task", { ...taskData, updatedAt: new Date() })
 
-      console.log(response)
-      
       const taskFilter = tasks.filter(task => (task.id !== response.data.updateTaskFetch.id))
 
       if (response.status === 200) setTasks([...taskFilter, response.data.updateTaskFetch])

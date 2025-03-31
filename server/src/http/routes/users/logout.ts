@@ -6,6 +6,6 @@ export const LogoutRouter: FastifyPluginAsyncZod = async (app) => {
 			path: "/",
 		});
 
-		res.send({ message: "Logout successful" });
+		res.send({ message: "Logout successful", isAuthenticated: false });
 	});
 };

@@ -53,8 +53,8 @@ export const RegisterRouter: FastifyPluginAsyncZod = async (app) => {
 
 			res.setCookie("token", token, {
 				httpOnly: true,
-				secure: process.env.NODE_ENV === "production",
-				sameSite: "strict",
+				secure: true,
+				sameSite: "none",
 				path: "/",
 				maxAge: 60 * 60,
 			});
