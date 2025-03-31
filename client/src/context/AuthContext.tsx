@@ -32,8 +32,18 @@ export function AuthProvider({children}: ChildrenInterface) {
     }
   }
 
+  const register = async (email: string, password: string, name: string) => {
+    const response = await api.post("register", { email, password, name }, { withCredentials: true });
+
+    if (response.status === 200) {
+      setIsAuthenticated(true);
+    } else {
+      console.error("Register failed");
+    }  
+  }
+
   return (
-    <AuthContext.Provider value={{ isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ isAuthenticated, login, logout, register }}>
       {children}
     </AuthContext.Provider>
   );
