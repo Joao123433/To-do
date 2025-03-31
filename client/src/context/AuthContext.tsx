@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from "react";
+import { createContext, useState } from "react";
 import type { ChildrenInterface } from "../interfaces/ChildrenInterface";
 import type { AuthContextInterface } from "../interfaces/AuthContextInterface";
 import { api } from "../services/api";
