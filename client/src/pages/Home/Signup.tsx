@@ -15,7 +15,7 @@ export function Signup() {
     register(email, password, name);
   };
 
-  if (isAuthenticated) {
+  if (isAuthenticated) { 
     return <Navigate to="/" />;
   }
 
@@ -36,7 +36,7 @@ export function Signup() {
             <label htmlFor="password">Password</label>
             <input type="text" id="password" className="border-2 p-2 rounded-lg" value={password} onChange={(e) => setPassword(e.target.value)} required />
           </div>
-          <button type="submit" className="rounded-4xl p-2 text-white hover:brightness-90" disabled={verifySubmit}>Login</button>
+          <button type="submit" className="rounded-4xl p-2 text-white hover:brightness-90" disabled={verifySubmit}>Sign up</button>
           <p>Already have an account? <NavLink to={"/login"} className="border-b-2 text-neutral-600">Log in</NavLink></p>
         </div>
       </form>

@@ -22,7 +22,7 @@ export function AuthProvider({children}: ChildrenInterface) {
     }
   };
 
-  const logout = async () => {
+  const logout = async () => { 
     const response = await api.post("logout", { withCredentials: true });
 
     if (response.status === 200) {
