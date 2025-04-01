@@ -1,4 +1,4 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import type { ChildrenInterface } from "../interfaces/ChildrenInterface";
 import type { AuthContextInterface } from "../interfaces/AuthContextInterface";
 import { api } from "../services/api";
@@ -6,7 +6,21 @@ import { api } from "../services/api";
 export const AuthContext = createContext<AuthContextInterface>({} as AuthContextInterface);
 
 export function AuthProvider({children}: ChildrenInterface) {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
+
+  useEffect(() => {
+    const checkToken = async () => {
+      try {
+        const response = await api.get("check-token", { withCredentials: true });
+        setIsAuthenticated(response.status === 200);
+      } catch (error) {
+        console.error("Error checking token:", error);
+        setIsAuthenticated(false);
+      }
+    };
+
+    checkToken();
+  }, []);
 
   const login = async (email: string, password: string) => {
     try {

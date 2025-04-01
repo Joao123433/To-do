@@ -1,4 +1,4 @@
-import type { FastifyReply, FastifyRequest } from "fastify";
+import { fastify, type FastifyReply, type FastifyRequest } from "fastify";
 
 export async function AuthMiddleware(req: FastifyRequest, res: FastifyReply) {
 	if (req.url === "/login" || req.url === "/register") {
@@ -9,13 +9,14 @@ export async function AuthMiddleware(req: FastifyRequest, res: FastifyReply) {
 		const token = req.cookies.token;
 
 		console.log(token);
-		console.log(req);
+		// console.log(req);
 
 		if (token === undefined) {
 			return res.status(401).send({ message: "Missing Token" });
 		}
 
-		const decoded = await req.jwtVerify();
+		console.log("antes da verificacao");
+		const decoded = await fastify.jwt.verify(token);
 		console.log(decoded);
 		req.user = decoded;
 	} catch (err) {

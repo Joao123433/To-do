@@ -26,11 +26,9 @@ import { PostTaskRouter } from "./routes/task/post";
 import { GetTaskRouter } from "./routes/task/get";
 import { DeleteTaskRouter } from "./routes/task/delete";
 import { PutTaskRouter } from "./routes/task/put";
+import { CheckToukenRouter } from "./routes/users/check-token";
 
 const app = fastify().withTypeProvider<ZodTypeProvider>();
-
-// MIDDLEWARE
-// app.addHook("onRequest", AuthMiddleware);
 
 // CORS
 app.register(fastifyCors, {
@@ -41,17 +39,47 @@ app.register(fastifyCors, {
 
 // FASTIFY COOKIES
 app.register(fastifyCookie, {
+	// parseOptions: {
+	// 	httpOnly: true,
+	// 	sameSite: "none",
+	// },
 	parseOptions: {},
 });
 
 // JWT
 app.register(fastifyJwt, {
-	secret: String(process.env.JWT_SECRET),
+	secret:
+		"6c6d10fa570c80298b2908cd732f2c863ce4f8597e05774bdc4dbbf8c38137368f57d43a84718c0353a50545c9cc4879eb97175c0458fc768bec16d3297d102580934659bd2c15302524ce9a97348fc86def4f1ef0b60198cfd3076d28bcb124394b6cd84a65cda25ded31c85ff66883cbbe1f5bd20219f039e64011043b09bd",
 	sign: { algorithm: "HS256" },
 });
 
+app.addHook("onRequest", async (req, res) => {
+	if (req.url === "/login" || req.url === "/register") {
+		return;
+	}
+
+	try {
+		// Pegue o token corretamente
+		const token = req.cookies.token;
+
+		if (!token) throw new Error("Token não encontrado");
+
+		const decoded = app.jwt.verify(token);
+		req.user = decoded;
+		console.log("Usuário autenticado:", decoded);
+	} catch (err) {
+		console.error("Erro ao autenticar:", err);
+		res.status(401).send({ message: "Token inválido" });
+	}
+});
+
+// MIDDLEWARE
+// app.addHook("onRequest", AuthMiddleware);
+
 app.setValidatorCompiler(validatorCompiler);
 app.setSerializerCompiler(serializerCompiler);
+
+app.register(CheckToukenRouter); // /check-token
 
 // ROTAS
 app.register(StatusRouter); // /status
