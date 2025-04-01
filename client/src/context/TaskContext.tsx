@@ -84,6 +84,7 @@ export function TaskProvider({ children }: ChildrenInterface) {
       const response = await api.post('task', { ...taskData });
 
       if (response.status === 200) setTasks((prevState) => [...prevState, response.data.taskInsert]);
+      sortTasks()
     } catch (error) {
       console.error("Error creating task:", error);
     }
@@ -104,10 +105,10 @@ export function TaskProvider({ children }: ChildrenInterface) {
 
     try {
       const response = await api.put("task", { ...taskData, updatedAt: new Date() })
-
       const taskFilter = tasks.filter(task => (task.id !== response.data.updateTaskFetch.id))
 
       if (response.status === 200) setTasks([...taskFilter, response.data.updateTaskFetch])
+      sortTasks()
     } catch (error) {
       console.error("Error creating task:", error);
     }
@@ -118,17 +119,18 @@ export function TaskProvider({ children }: ChildrenInterface) {
       const response = await api.delete("task", { headers: { id: id, } })
       const taskFilter = tasks.filter((task) => task.id !== response.data.deleteTaskFetch[0].id)
       
-      const taskSortable = sortTasks(taskFilter)
-      
-      if (response.status === 200) taskFilter ? setTasks([...taskSortable]) : setTasks([])
+      if (response.status === 200) taskFilter ? setTasks([...taskFilter]) : setTasks([])
+      sortTasks()
     } catch (error) {
       console.error("Error creating task:", error);
     }
   }
 
-  const sortTasks = (tasks: TaskFetch[]) => {
-    return tasks.sort((a, b) => {
-      return new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+  const sortTasks = () => {
+    setTasks((prevState) => {
+      return prevState.sort((a, b) => {
+        return new Date(a.deadline).getTime() - new Date(b.deadline).getTime()
+      })
     })
   }
 
