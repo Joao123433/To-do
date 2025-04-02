@@ -1,9 +1,9 @@
 import { Navigate, NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/UseAuth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export function LoginPage() {
-  const { login, isAuthenticated } = useAuth();
+  const { login, isAuthenticated, checkToken } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -13,6 +13,11 @@ export function LoginPage() {
     e.preventDefault();
     login(email, password);
   };
+
+  useEffect(() => {
+    checkToken()
+}, [checkToken])
+
 
   if (isAuthenticated) {
     return <Navigate to="/" />;

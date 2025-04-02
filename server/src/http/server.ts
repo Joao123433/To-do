@@ -28,7 +28,11 @@ import { DeleteTaskRouter } from "./routes/task/delete";
 import { PutTaskRouter } from "./routes/task/put";
 import { CheckToukenRouter } from "./routes/users/check-token";
 
-const app = fastify().withTypeProvider<ZodTypeProvider>();
+const app = fastify({
+	logger: {
+		level: "warn",
+	},
+}).withTypeProvider<ZodTypeProvider>();
 
 // CORS
 app.register(fastifyCors, {
@@ -54,7 +58,11 @@ app.register(fastifyJwt, {
 });
 
 app.addHook("onRequest", async (req, res) => {
-	if (req.url === "/login" || req.url === "/register") {
+	if (
+		req.url === "/login" ||
+		req.url === "/register" ||
+		req.url === "/check-token"
+	) {
 		return;
 	}
 
@@ -62,9 +70,9 @@ app.addHook("onRequest", async (req, res) => {
 		// Pegue o token corretamente
 		const token = req.cookies.token;
 
-		if (!token) throw new Error("Token não encontrado");
+		if (!token) res.status(404).send({ message: "Token não encontrado" });
 
-		const decoded = app.jwt.verify(token);
+		const decoded = app.jwt.verify(token as string);
 		req.user = decoded;
 		console.log("Usuário autenticado:", decoded);
 	} catch (err) {

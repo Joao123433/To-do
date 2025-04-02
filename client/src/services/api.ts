@@ -6,15 +6,15 @@ export const api = axios.create({
 	withCredentials: true,
 });
 
-axios.interceptors.request.use(
-	(config) => {
-		const token = localStorage.getItem("jwt");
-		if (token) {
-			config.headers.Authorization = `Bearer ${token}`; // Adiciona o token a cada requisição
-		}
-		return config;
-	},
-	(error) => {
-		return Promise.reject(error);
-	},
-);
+// axios.interceptors.request.use(
+// 	(config) => {
+// 		const token = localStorage.getItem("jwt");
+// 		if (token) {
+// 			config.headers.Authorization = `Bearer ${token}`; // Adiciona o token a cada requisição
+// 		}
+// 		return config;
+// 	},
+// 	(error) => {
+// 		return Promise.reject(error);
+// 	},
+// );
