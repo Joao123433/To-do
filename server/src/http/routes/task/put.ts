@@ -40,11 +40,8 @@ export const PutTaskRouter: FastifyPluginAsyncZod = async (app) => {
 					updateTaskFetch,
 				});
 			} catch (error) {
-				res.status(500).send({
-					message:
-						error instanceof Error
-							? `Error updating task: ${error.message}`
-							: "An unexpected error occurred while updating task",
+				res.status(400).send({
+					message: "Error updating task",
 				});
 			}
 		},

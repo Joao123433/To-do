@@ -21,15 +21,12 @@ export const DeleteTaskRouter: FastifyPluginAsyncZod = async (app) => {
 				if (!deleteTaskFetch) throw new Error("Task not found");
 
 				res.status(200).send({
-					message: "Archived tasks retrieved successfully.",
+					message: "Task deleted successfully.",
 					deleteTaskFetch,
 				});
 			} catch (error) {
-				res.status(500).send({
-					message:
-						error instanceof Error
-							? `Error deleting task: ${error.message}`
-							: "An unexpected error occurred while deleting task.",
+				res.status(404).send({
+					message: "Task not found",
 				});
 			}
 		},

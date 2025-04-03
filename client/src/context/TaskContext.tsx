@@ -10,6 +10,7 @@ export type TaskOmitRow = Omit<TaskFetch, "row">;
 import { createContext, useEffect, useState } from "react";
 import { api } from "../services/api";
 import { useAuth } from "../hooks/UseAuth";
+import { toast } from "react-toastify";
 
 export const TaskContext = createContext<TaskDataContext>({} as TaskDataContext)
 
@@ -81,14 +82,23 @@ export function TaskProvider({ children }: ChildrenInterface) {
   const createTask = async (taskData: TaskOmit) => {
     onRequestCloseNewTask();
 
-    try {
-      const response = await api.post('task', { ...taskData });
-
-      if (response.status === 200) setTasks((prevState) => [...prevState, response.data.taskInsert]);
-      sortTasks()
-    } catch (error) {
-      console.error("Error creating task:", error);
-    }
+    toast.promise(
+      api.post('task', { ...taskData })
+        .then(response => {
+          console.log(response)
+          if (response.status === 200) {
+            setTasks(prevState => [...prevState, response.data.taskInsert]);
+            sortTasks();
+          }
+          return response;
+        }),
+      {
+        pending: 'Creating task...',
+        success: 'Task created successfully!',
+      }
+    ).catch(error => {
+      toast.error(error.response.data.message)
+    });
   }
 
   const isOpenEditTask = (id: string) => {
@@ -104,27 +114,44 @@ export function TaskProvider({ children }: ChildrenInterface) {
   const UpdateTask = async (taskData: TaskOmitRow) => {
     onRequestCloseEditTask()
 
-    try {
-      const response = await api.put("task", { ...taskData, updatedAt: new Date() })
-      const taskFilter = tasks.filter(task => (task.id !== response.data.updateTaskFetch.id))
-
-      if (response.status === 200) setTasks([...taskFilter, response.data.updateTaskFetch])
-      sortTasks()
-    } catch (error) {
-      console.error("Error creating task:", error);
-    }
+    toast.promise(
+      api.put("task", { ...taskData, updatedAt: new Date() })
+        .then(response => {
+          if(response.status === 200) {
+            const taskFilter = tasks.filter(task => task.id !== response.data.updateTaskFetch.id);
+            setTasks([...taskFilter, response.data.updateTaskFetch]);
+            sortTasks();
+          }
+          return response;
+        }),
+      {
+        pending: "Updating task...",
+        success: "Task updated successfully!",
+      }
+    ).catch(error => {
+      toast.error(error.response.data.message)
+    });
   }
 
   const deleteTask = async (id: string) => {
-    try {
-      const response = await api.delete("task", { headers: { id: id, } })
-      const taskFilter = tasks.filter((task) => task.id !== response.data.deleteTaskFetch[0].id)
-      
-      if (response.status === 200) taskFilter ? setTasks([...taskFilter]) : setTasks([])
-      sortTasks()
-    } catch (error) {
-      console.error("Error creating task:", error);
-    }
+    toast.promise(
+      api.delete("task", { headers: { id: id, } })
+        .then(response => {
+          if(response.status === 200) {
+            const taskFilter = tasks.filter((task) => task.id !== response.data.deleteTaskFetch[0].id)
+            taskFilter ? setTasks([...taskFilter]) : setTasks([])
+            sortTasks();
+          }
+
+          return response;
+        }),
+      {
+        pending: "Deleting task...",
+        success: "Task deleted successfully!",
+      }
+    ).catch(error => {
+      toast.error(error.response.data.message)
+    });
   }
 
   const sortTasks = () => {

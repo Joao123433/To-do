@@ -40,11 +40,8 @@ export const PostTaskRouter: FastifyPluginAsyncZod = async (app) => {
 					taskInsert,
 				});
 			} catch (error) {
-				res.status(500).send({
-					message:
-						error instanceof Error
-							? `Error creating task: ${error.message}`
-							: "An unexpected error occurred while creating task",
+				res.status(400).send({
+					message: "Error creating task",
 				});
 			}
 		},
