@@ -1,9 +1,10 @@
 import { Navigate, NavLink } from "react-router-dom";
 import { useAuth } from "../../hooks/UseAuth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { toast } from "react-toastify";
 
 export function LoginPage() {
-  const { login, isAuthenticated, checkToken } = useAuth();
+  const { login, isAuthenticated } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -12,12 +13,17 @@ export function LoginPage() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     login(email, password);
+    
+    toast.promise(
+      async () => login(email, password),
+      {
+        pending: 'Registering user',
+        success: "Login successfully"
+      }
+    ).catch(error => {
+      toast.error(error.message)
+    });
   };
-
-  useEffect(() => {
-    checkToken()
-}, [checkToken])
-
 
   if (isAuthenticated) {
     return <Navigate to="/" />;

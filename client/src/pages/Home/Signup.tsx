@@ -18,10 +18,11 @@ export function Signup() {
       async () => register(email, password, name),
       {
         pending: 'Registering user',
-        success: 'User registered successfully',
-        error: 'Failed to register user'
+        success: "User registered successfully"
       }
-    )
+    ).catch(error => {
+      toast.error(error.message)
+    });
   };
 
   if (isAuthenticated) { 

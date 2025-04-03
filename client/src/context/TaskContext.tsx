@@ -19,9 +19,10 @@ export function TaskProvider({ children }: ChildrenInterface) {
   const [priorities, setPriorities] = useState<PrioritiesFetch[]>([]);
   const [newTaskModal, setNewTaskModal] = useState(false)
   const [editTaskModal, setEditTaskModal] = useState(false)
-  const [loader, setLoader] = useState(true)
   const [elementEdit, setElementEdit] = useState("")
   const { isAuthenticated } = useAuth();
+  
+  const [loader, setLoader] = useState(true)
 
   useEffect(() => {
     async function fetchMyAPI() {

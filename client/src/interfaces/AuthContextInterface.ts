@@ -4,5 +4,4 @@ export interface AuthContextInterface {
 	logout: () => void;
 	// register: (email: string, password: string, name: string) => Promise<string>;
 	register: (email: string, password: string, name: string) => void;
-	checkToken: () => void;
 }

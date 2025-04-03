@@ -75,6 +75,7 @@ app.addHook("onRequest", async (req, res) => {
 		const decoded = app.jwt.verify(token as string);
 		req.user = decoded;
 		console.log("Usuário autenticado:", decoded);
+		// res.status(200).send({ message: "Usuário autenticado" });
 	} catch (err) {
 		console.error("Erro ao autenticar:", err);
 		res.status(401).send({ message: "Token inválido" });

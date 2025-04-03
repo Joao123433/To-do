@@ -6,12 +6,15 @@ export const CheckToukenRouter: FastifyPluginAsyncZod = async (app) => {
 			const token = req.cookies.token;
 
 			if (!token) {
-				return res.status(404).send({ message: "Token não encontrado" });
+				return res.status(401).send({ message: "Token não encontrado" });
 			}
 
-			app.jwt.verify(token);
-
-			return res.status(200).send({ message: "Token válido" });
+			try {
+				app.jwt.verify(token);
+				return res.status(200).send({ message: "Token válido" });
+			} catch (error) {
+				return res.status(401).send({ message: "Token inválido ou expirado" });
+			}
 		} catch (err) {
 			console.error("Erro ao verificar token:", err);
 		}
