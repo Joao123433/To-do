@@ -1,11 +1,29 @@
-import { faList } from "@fortawesome/free-solid-svg-icons";
+import { faList, faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import { UseTask } from "../../hooks/UseTask";
+import { useAuth } from "../../hooks/UseAuth";
+import { toast } from "react-toastify";
+
 
 export function RootLayout() {
   const { pathname } = useLocation();
-  const { isOpenNewTask } = UseTask()
+  const { isOpenNewTask } = UseTask();
+  const { logout } = useAuth();
+
+    const handleSubmit = (e: React.FormEvent) => {
+      e.preventDefault();
+
+      toast.promise(
+        async () => logout(),
+        {
+          pending: 'Logout',
+          success: "Logout successfully"
+        }
+      ).catch(error => {
+        toast.error(error.message)
+      });
+    };
 
   return (
     <div className="p-4 md:p-16">
@@ -18,6 +36,7 @@ export function RootLayout() {
           <Link to='/next7days' className={`hover:brightness-50 duration-150 ease-in font-bold ${pathname === "/next7days" ? "border-b-2" : ""}`}>Next 7 Days</Link>
           <Link to='/archive' className={`hover:brightness-50 duration-150 ease-in font-bold ${pathname === "/archive" ? "border-b-2" : ""}`}>Archive</Link>
           <button type="button" className="font-bold py-tiny px-4 mb-1 rounded-sm hover:brightness-75 duration-300" onClick={() => isOpenNewTask()}>New</button>
+          <button type="button" className="font-bold py-tiny px-4 mb-1 rounded-sm hover:brightness-75 duration-300" onClick={handleSubmit}><FontAwesomeIcon icon={faRightFromBracket}  /></button>
         </nav>
       </header>
       <main className="w-full h-full py-3" id="main">

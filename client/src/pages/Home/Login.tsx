@@ -12,12 +12,11 @@ export function LoginPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    login(email, password);
     
     toast.promise(
       async () => login(email, password),
       {
-        pending: 'Registering user',
+        pending: 'logging in user',
         success: "Login successfully"
       }
     ).catch(error => {

@@ -51,13 +51,14 @@ export function AuthProvider({children}: ChildrenInterface) {
     }
   };
 
-  const logout = async () => { 
-    const response = await api.post("logout", { withCredentials: true });
+  const logout = async () => {
+    try {
+      const response = await api.post("logout", { withCredentials: true });
 
-    if (response.status === 200) {
-      setIsAuthenticated(false);
-    } else {
-      console.error("Logout failed");
+      if (response.status === 200) setIsAuthenticated(false)
+    } catch (error: unknown) {
+      const err = error as errorSchema;
+      throw new Error(err.response.data.message);
     }
   }
 
