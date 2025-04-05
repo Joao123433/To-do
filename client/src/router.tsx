@@ -6,7 +6,6 @@ import { Next7Days } from "./pages/Home/Next7Days";
 import { Archive } from "./pages/Home/Archives";
 import { PrivateRoute } from "./components/PrivateRoute";
 import { LoginPage } from "./pages/Home/Login";
-import { Signup } from "./pages/Home/Signup";
 
 export const router = createBrowserRouter([
   {
@@ -38,9 +37,5 @@ export const router = createBrowserRouter([
   {
     path: "/login",
     element: <LoginPage />,
-  },
-  {
-    path: "/signup",
-    element: <Signup />,
   }
 ])

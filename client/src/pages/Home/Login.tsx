@@ -1,4 +1,4 @@
-import { Navigate, NavLink } from "react-router-dom";
+import { Navigate } from "react-router-dom";
 import { useAuth } from "../../hooks/UseAuth";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -8,10 +8,16 @@ export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const verifySubmit = email === "" || password === "";
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    const isEmailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const isPasswordValid = /^.{4,}$/.test(password);
+  
+    if (!isPasswordValid || !isEmailValid) {
+      toast.error("Preencha os campos corretamente!");
+      return;
+    }
     
     toast.promise(
       async () => login(email, password),
@@ -24,8 +30,36 @@ export function LoginPage() {
     });
   };
 
+  const verifySubmit = email === "" || password === "";
+
   if (isAuthenticated) {
     return <Navigate to="/" />;
+  }
+
+  const verifyEmail = (ev: { target: { value: string; classList: { add: (arg0: string) => void; remove: (arg0: string) => void; }; }; }) => {
+    const email = ev.target.value;
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    setEmail(email);
+
+    ev.target.classList.add("border-red-500")
+
+    if(email.match(regex) || email.length === 0) {
+      ev.target.classList.remove("border-red-500")
+    }
+  }
+
+  const verifyPassword = (ev: { target: { value: string; classList: { add: (arg0: string) => void; remove: (arg0: string) => void; }; }; }) => {
+    const password = ev.target.value;
+    const regex = /^.{4,}$/;
+    
+    setPassword(password);
+
+    ev.target.classList.add("border-red-500")
+
+    if(password.match(regex)) {
+      ev.target.classList.remove("border-red-500")
+    }
   }
 
   return (
@@ -35,14 +69,13 @@ export function LoginPage() {
           <h1 className="text-3xl font-bold text-black">Log in</h1>
           <div className="flex flex-col gap-1">
             <label htmlFor="email">E-mail</label>
-            <input type="text" id="email" className="border-2 p-2 rounded-lg" value={email} onChange={(e) => setEmail(e.target.value)} required />
+            <input type="text" id="email" className="border-2 p-2 rounded-lg focus:outline-none" value={email} onChange={verifyEmail} required />
           </div>
           <div className="flex flex-col gap-1">
             <label htmlFor="password">Password</label>
-            <input type="text" id="password" className="border-2 p-2 rounded-lg" value={password} onChange={(e) => setPassword(e.target.value)} required />
+            <input type="password" id="password" className="border-2 p-2 rounded-lg focus:outline-none" value={password} onChange={verifyPassword} required />
           </div>
-          <button type="submit" className="rounded-4xl p-2 text-white hover:brightness-90" disabled={verifySubmit}>Login</button>
-          <p>Dont have and acount? <NavLink to={"/signup"} className="border-b-2 text-neutral-600">Singn up</NavLink></p>
+          <button type="submit" className="rounded-4xl p-2 text-white hover:brightness-90 disabled:brightness-75" disabled={verifySubmit}>Login</button>
         </div>
       </form>
     </>
