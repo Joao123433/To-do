@@ -13,7 +13,7 @@ function App() {
       <TaskProvider>
         <RouterProvider router={router} />
       </TaskProvider>
-      <ToastContainer theme="dark" position="bottom-right"/>
+      <ToastContainer theme="dark" position="bottom-right" autoClose={2000}/>
     </AuthProvider>
   )
 }
